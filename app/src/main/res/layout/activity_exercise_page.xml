@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:id="@+id/exercisemain"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:id="@+id/exercisetopbar">
+
+        <EditText
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/exercisesearch" />
+
+<!--need to change this to a better button-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.28"
+            android:src="@android:drawable/ic_menu_add"
+            android:background="#fff0f0f0"
+            android:onClick="exerciseaddbutton"
+            android:layout_gravity="center" />
+
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/exerciselist"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    </ListView>
+
+</LinearLayout>
