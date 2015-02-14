@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_exercises_page">exercisesPage</string>
     <string name="title_activity_exercise_page">ExercisePage</string>
+    <string name="title_activity_exercisepopup">New exercise</string>
 
 </resources>

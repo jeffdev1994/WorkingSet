@@ -21,17 +21,26 @@
         <EditText
             android:layout_width="271dp"
             android:layout_height="wrap_content"
-            android:id="@+id/exercisesearch" />
+            android:id="@+id/exercisesearch"
+            android:hint="search" />
 
-<!--need to change this to a better button-->
+
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.28"
-            android:src="@android:drawable/ic_menu_add"
-            android:background="#fff0f0f0"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:src="@android:drawable/ic_menu_search"
+            android:background="#fff0f0f0" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addexercisebutton"
+            android:src="@android:drawable/ic_input_add"
             android:onClick="exerciseaddbutton"
-            android:layout_gravity="center" />
+            android:background="#fff0f0f0"
+            android:tint="#ff040404"
+            android:paddingLeft="15dp" />
 
 
     </LinearLayout>

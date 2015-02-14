@@ -19,7 +19,12 @@
         <activity
             android:name=".ExercisePage"
             android:label="@string/title_activity_exercise_page"
-            android:parentActivityName=".HomePage">
+            android:parentActivityName=".HomePage" >
+        </activity>
+        <activity
+            android:name=".exercisepopup"
+            android:label="@string/title_activity_exercisepopup"
+            android:theme="@android:style/Theme.Holo.Dialog">
         </activity>
     </application>
 
