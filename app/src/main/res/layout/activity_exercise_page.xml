@@ -13,7 +13,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
         android:id="@+id/exercisetopbar">
@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageButton2"
             android:src="@android:drawable/ic_menu_search"
-            android:background="#fff0f0f0" />
+            android:background="#fff0f0f0"
+            android:onClick="deletefunction"/>
 
         <ImageButton
             android:layout_width="wrap_content"

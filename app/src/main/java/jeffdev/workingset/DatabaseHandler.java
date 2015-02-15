@@ -33,27 +33,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    // Upgrading database - need to look into this, might need to make seperate classes for each table..
+    // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        // Drop older table if existed
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
-//
-//        // Create tables again
-//        onCreate(db);
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS exercise");
+        db.execSQL("DROP TABLE IF EXISTS makeup");
+        db.execSQL("DROP TABLE IF EXISTS doesset");
+        db.execSQL("DROP TABLE IF EXISTS workout");
+
+        // Create tables again
+        onCreate(db);
+    }
+//for testing purposes, deletes the tables
+    public void resettables() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS exercise");
+        db.execSQL("DROP TABLE IF EXISTS makeup");
+        db.execSQL("DROP TABLE IF EXISTS doesset");
+        db.execSQL("DROP TABLE IF EXISTS workout");
+
+        onCreate(db);
     }
 
-    public void addExercise(String name, String description) {
+    public int addExercise(String name, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", name);
         values.put("description", description);
-        db.insert("exercise",null,values);
+        try {
+            db.insertOrThrow("exercise", null, values);
+        }catch(android.database.sqlite.SQLiteConstraintException e){
+            return 1;
+        }
         db.close();
+        return 0;
     }
 
-    public List<String[]> getExercise(String search){
-        List<String[]> exerciselist = new ArrayList<String[]>();
+    public List<exerciseStorage> getExercise(String search){
+        List<exerciseStorage> exerciselist = new ArrayList<exerciseStorage>();
 
         //if it is null, return the whole list
         if (search.equals("all")){
@@ -62,12 +81,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(query, null);
 
-            String[] exercise = new String[2];
-
             if(cursor.moveToFirst()){
                 do{
-                    exercise[0] = cursor.getString(0);
-                    exercise[1] = cursor.getString(1);
+                    exerciseStorage exercise = new exerciseStorage();
+                    exercise.setName(cursor.getString(0));
+                    exercise.setDescription(cursor.getString(1));
 
                     exerciselist.add(exercise);
                 }while(cursor.moveToNext());

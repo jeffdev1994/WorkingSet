@@ -3,6 +3,7 @@ package jeffdev.workingset;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,11 @@ public class ExercisePage extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void deletefunction(View view){
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.resettables();
+        Log.d("deleteing","tables are reset");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
