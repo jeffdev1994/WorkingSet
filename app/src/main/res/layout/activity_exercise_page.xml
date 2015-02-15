@@ -22,9 +22,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/exercisesearch"
             android:hint="search"
+            android:inputType="text"
             android:gravity="bottom"
             android:textSize="26dp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:imeOptions="actionSearch"
+            android:imeActionLabel="Search"/>
 
 
         <ImageButton

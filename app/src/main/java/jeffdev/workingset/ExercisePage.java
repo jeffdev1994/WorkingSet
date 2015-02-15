@@ -6,9 +6,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -33,12 +37,26 @@ public class ExercisePage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_page);
 
+        EditText searchinput = (EditText) findViewById(R.id.exercisesearch);
+
+        //making the return button, a search button instead
+        searchinput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchexercise(null);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         // Get ListView object from xml
         ListView listView = (ListView) findViewById(R.id.exerciselist);
 
         DatabaseHandler db = new DatabaseHandler(this);
 
-        EditText searchinput = (EditText) findViewById(R.id.exercisesearch);
+
         allvalues = db.getExercise(searchinput.getText().toString());
         List<String> values = new ArrayList<String>();
         for(int i=0;i<allvalues.size();i++){
@@ -79,9 +97,25 @@ public class ExercisePage extends Activity {
         String temptext = temp.getText().toString();
         setContentView(R.layout.activity_exercise_page_search);
 
+        //put the keyboard down after searching
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         EditText searchinput = (EditText) findViewById(R.id.exercisesearch);
 
         searchinput.setText(temptext);
+
+        //making the return button, a search button instead
+        searchinput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchexercise(null);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         DatabaseHandler db = new DatabaseHandler(this);
         allvalues = db.getExercise(searchinput.getText().toString());
@@ -121,7 +155,7 @@ public class ExercisePage extends Activity {
         this.onCreate(null);
     }
 
-    
+
 
 //never used in real app, but have it for getting rid of the database at random times
     public void deletetables(){

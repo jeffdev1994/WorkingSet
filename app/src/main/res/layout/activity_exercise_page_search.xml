@@ -24,7 +24,10 @@
             android:hint="search"
             android:gravity="bottom"
             android:textSize="26dp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:imeActionLabel="Search"/>
 
 
         <ImageButton
