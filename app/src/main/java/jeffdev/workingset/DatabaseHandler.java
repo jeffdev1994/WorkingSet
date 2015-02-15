@@ -73,27 +73,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<exerciseStorage> getExercise(String search){
         List<exerciseStorage> exerciselist = new ArrayList<exerciseStorage>();
-
+        String query;
         //if it is null, return the whole list
-        if (search.equals("all")){
-            String query = "select * from exercise";
-
-            SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.rawQuery(query, null);
-
-            if(cursor.moveToFirst()){
-                do{
-                    exerciseStorage exercise = new exerciseStorage();
-                    exercise.setName(cursor.getString(0));
-                    exercise.setDescription(cursor.getString(1));
-
-                    exerciselist.add(exercise);
-                }while(cursor.moveToNext());
-            }
-        }
+//        if (search.equals("all")){
+//            query = "select * from exercise";
+//        }
         //need to fill this in, it will be for searching.
-        else{
+        query =  "Select * from exercise where name like '%" + search + "%'";
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                exerciseStorage exercise = new exerciseStorage();
+                exercise.setName(cursor.getString(0));
+                exercise.setDescription(cursor.getString(1));
+
+                exerciselist.add(exercise);
+            }while(cursor.moveToNext());
         }
         return exerciselist;
     }

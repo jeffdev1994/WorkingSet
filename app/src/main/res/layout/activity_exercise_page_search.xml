@@ -18,7 +18,7 @@
         android:id="@+id/exercisetopbar">
 
         <EditText
-            android:layout_width="271dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:id="@+id/exercisesearch"
             android:hint="search"
@@ -26,6 +26,14 @@
             android:textSize="26dp"
             android:textStyle="normal" />
 
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:id="@+id/imageButton3"
+            android:src="@android:drawable/ic_delete"
+            android:background="#fff0f0f0"
+            android:onClick="cancelsearch" />
 
         <ImageButton
             android:layout_width="wrap_content"
