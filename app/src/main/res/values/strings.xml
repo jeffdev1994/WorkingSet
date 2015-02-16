@@ -7,5 +7,6 @@
     <string name="title_activity_exercises_page">exercisesPage</string>
     <string name="title_activity_exercise_page">ExercisePage</string>
     <string name="title_activity_exercisepopup">New exercise</string>
+    <string name="title_activity_create_workout_page">CreateWorkoutPage</string>
 
 </resources>

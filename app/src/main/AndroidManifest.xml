@@ -17,22 +17,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode="stateHidden"
             android:name=".ExercisePage"
             android:label="@string/title_activity_exercise_page"
-            android:parentActivityName=".HomePage" >
+            android:parentActivityName=".HomePage"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:windowSoftInputMode="stateVisible"
             android:name=".exercisepopup"
             android:label="@string/title_activity_exercisepopup"
-            android:theme="@android:style/Theme.Holo.Dialog">
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <activity
-            android:windowSoftInputMode="stateHidden"
             android:name=".exercisepopup_option"
             android:label="Update exercise"
-            android:theme="@android:style/Theme.Holo.Dialog">
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".CreateWorkoutPage"
+            android:label="@string/title_activity_create_workout_page"
+            android:parentActivityName=".HomePage" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jeffdev.workingset.HomePage" />
         </activity>
     </application>
 
