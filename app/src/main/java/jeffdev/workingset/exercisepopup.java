@@ -25,9 +25,10 @@ public class exercisepopup extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercisepopup);
         Intent intent = getIntent();
-//        Log.d("type",intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1));
+        //Log.d("type",intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1));
         //put the passed on info into the fields.
-        try{
+//        try{
+        if(intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1) != null) {
             String name = intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1);
             this.updatingname = name;
             String description = intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE2);
@@ -36,9 +37,10 @@ public class exercisepopup extends Activity {
             EditText descriptionfield = (EditText) findViewById(R.id.popupexercisedescription);
             descriptionfield.setText(description);
             update_flag = 1;
-        }catch(NullPointerException e){
-            //do nothing, if it doesnt have extra, then let it be
         }
+//        }catch(NullPointerException e){
+//            //do nothing, if it doesnt have extra, then let it be
+//        }
     }
 
     public void submitexercise(View view) {

@@ -159,12 +159,16 @@ public class ExercisePage extends Activity {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-                //fill this in with whatever is in the method above
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String exercisename = allvalues.get(position).name;
+                String exercisedescription = allvalues.get(position).description;
+                Intent intent = new Intent(context,exercisepopup_option.class);
+                intent.putExtra(OPTION_MESSAGE1,exercisename);
+                intent.putExtra(OPTION_MESSAGE2,exercisedescription);
+                startActivity(intent);
                 return true;
             }
         });
-
     }
 
 
