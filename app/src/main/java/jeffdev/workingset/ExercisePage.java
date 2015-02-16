@@ -1,6 +1,7 @@
 package jeffdev.workingset;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ import java.util.List;
 public class ExercisePage extends Activity {
 
     List<exerciseStorage> allvalues;
+    final Context context = this;
+    public final static String OPTION_MESSAGE1 = "jeffdev.workingset.exercisename";
+    public final static String OPTION_MESSAGE2 = "jeffdev.workingset.exercisedescription";
 
     //could set it up that the search button just recalls this, just need to learn to save instance thing abit
     //so that i can place what is in the search bar, back in after calling it again, cause without that
@@ -86,6 +90,19 @@ public class ExercisePage extends Activity {
                 toast.show();
             }
         });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String exercisename = allvalues.get(position).name;
+                String exercisedescription = allvalues.get(position).description;
+                Intent intent = new Intent(context,exercisepopup_option.class);
+                intent.putExtra(OPTION_MESSAGE1,exercisename);
+                intent.putExtra(OPTION_MESSAGE2,exercisedescription);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
 
@@ -129,7 +146,6 @@ public class ExercisePage extends Activity {
         ListView listView = (ListView) findViewById(R.id.exerciselist);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 Toast toast = Toast.makeText(getApplicationContext(),allvalues.get(position).description, Toast.LENGTH_LONG);
@@ -138,6 +154,14 @@ public class ExercisePage extends Activity {
                 toastTV.setTextSize(25);
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
                 toast.show();
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
+                //fill this in with whatever is in the method above
+                return true;
             }
         });
 

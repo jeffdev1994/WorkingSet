@@ -71,6 +71,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return 0;
     }
 
+    public void deleteExercise(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Delete from exercise where name = '" + name + "'";
+        Cursor cursor = db.rawQuery(query,null);
+        cursor.moveToFirst();
+        db.close();
+
+    }
+
+    public void updateExercise(String oldname, String newname, String description){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query = "Update exercise set name = " + newname + ", description = " + description + " where name = '" + oldname+"'";
+        //Cursor cursor = db.rawQuery(query,null);
+        //cursor.moveToFirst();
+        ContentValues values = new ContentValues();
+        values.put("name",newname);
+        values.put("description", description);
+        db.update("exercise",values,"name = ?", new String [] {oldname});
+        db.close();
+
+    }
+
+
+    public exerciseStorage getSingleExercise(String name){
+        exerciseStorage exercise = new exerciseStorage();
+        String query = "Select * from exercise where name = " + name;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        exercise.setName(cursor.getString(0));
+        exercise.setDescription(cursor.getString(1));
+        db.close();
+        return exercise;
+    }
+
     public List<exerciseStorage> getExercise(String search){
         List<exerciseStorage> exerciselist = new ArrayList<exerciseStorage>();
         String query;
@@ -93,6 +128,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 exerciselist.add(exercise);
             }while(cursor.moveToNext());
         }
+        db.close();
         return exerciselist;
     }
 }

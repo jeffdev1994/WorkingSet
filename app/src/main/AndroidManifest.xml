@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/workingseticon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -26,6 +26,12 @@
             android:windowSoftInputMode="stateVisible"
             android:name=".exercisepopup"
             android:label="@string/title_activity_exercisepopup"
+            android:theme="@android:style/Theme.Holo.Dialog">
+        </activity>
+        <activity
+            android:windowSoftInputMode="stateHidden"
+            android:name=".exercisepopup_option"
+            android:label="Update exercise"
             android:theme="@android:style/Theme.Holo.Dialog">
         </activity>
     </application>
