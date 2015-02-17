@@ -1,9 +1,11 @@
 package jeffdev.workingset;
 
+import java.io.Serializable;
+
 /**
  * Created by Jeff on 2015-02-14.
  */
-public class exerciseStorage {
+public class exerciseStorage implements Serializable {
     public String name;
     public String description;
 

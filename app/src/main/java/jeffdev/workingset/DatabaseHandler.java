@@ -102,7 +102,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
         exercise.setName(cursor.getString(0));
         exercise.setDescription(cursor.getString(1));
-        db.close();
         return exercise;
     }
 
@@ -128,7 +127,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 exerciselist.add(exercise);
             }while(cursor.moveToNext());
         }
-        db.close();
         return exerciselist;
     }
+
+    public void startTransaction(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+    }
+
 }

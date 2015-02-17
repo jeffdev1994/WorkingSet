@@ -18,29 +18,42 @@
         </activity>
         <activity
             android:name=".ExercisePage"
-            android:label="@string/title_activity_exercise_page"
+            android:label="Exercises"
             android:parentActivityName=".HomePage"
             android:windowSoftInputMode="stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jeffdev.workingset.HomePage" />
         </activity>
         <activity
             android:name=".exercisepopup"
-            android:label="@string/title_activity_exercisepopup"
+            android:label="Update Exercise"
+            android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:windowSoftInputMode="stateVisible" >
         </activity>
         <activity
             android:name=".exercisepopup_option"
-            android:label="Update exercise"
+            android:label="Update Exercise"
+            android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".CreateWorkoutPage"
-            android:label="@string/title_activity_create_workout_page"
-            android:parentActivityName=".HomePage" >
+            android:label="Create Workout"
+            android:parentActivityName=".HomePage"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
+        </activity>
+        <activity
+            android:name=".createworkout_addexercise"
+            android:label="Add Exercises"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 
