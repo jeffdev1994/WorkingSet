@@ -39,7 +39,8 @@ public class createworkout_addexercise extends Activity {
             selected = new ArrayList<exerciseStorage>();
         }
 
-        ListView listView = (ListView) findViewById(R.id.exerciselist);
+        ListView listView = (ListView) findViewById(R.id.neworkoutexerciselist);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         DatabaseHandler db = new DatabaseHandler(this);
 
 
@@ -57,15 +58,15 @@ public class createworkout_addexercise extends Activity {
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
-        //listview item click listener, to add the checkmarks
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                CheckedTextView checkedTextView = ((CheckedTextView)view);
-                checkedTextView.setChecked(!checkedTextView.isChecked());
-            }
-        });
+//        //listview item click listener, to add the checkmarks
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+//                CheckedTextView checkedTextView = ((CheckedTextView)view);
+//                checkedTextView.setChecked(!checkedTextView.isChecked());
+//            }
+//        });
         // ListView Item long Click Listener
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -87,15 +88,16 @@ public class createworkout_addexercise extends Activity {
 
     public void submitexercises(View view){
         //selected = new ArrayList<exerciseStorage>();
-        ListView listView = (ListView) findViewById(R.id.exerciseList);
+        ListView listView = (ListView) findViewById(R.id.neworkoutexerciselist);
         SparseBooleanArray sparseArray = listView.getCheckedItemPositions();
+        int x;
         for (int i = 0; i < sparseArray.size(); i++ )
         {
             //if its true at that spot, then i want to put my values from my corresponding
             //allvalues array into a new array to be sent back to other activity
-            if(sparseArray.valueAt(i) == true){
-                selected.add(allvalues.get(i));
-            }
+            x = sparseArray.keyAt(i);
+            selected.add(allvalues.get(x));
+
         }
         Intent intent = new Intent(this,CreateWorkoutPage.class);
 

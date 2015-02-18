@@ -180,7 +180,8 @@ public class ExercisePage extends ActionBarActivity {
 
 
     public void cancelsearch(View view){
-        this.onCreate(null);
+        Intent intent = new Intent(this,ExercisePage.class);
+        startActivity(intent);
     }
 
 

@@ -12,7 +12,7 @@
         android:onClick="submitexercises"/>
 
     <ListView
-        android:id="@+id/exerciseList"
+        android:id="@+id/neworkoutexerciselist"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
     </ListView>
