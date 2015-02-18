@@ -83,7 +83,6 @@ public class createworkout_addexercise extends Activity {
                 return true;
             }
         });
-
     }
 
     public void submitexercises(View view){
@@ -96,8 +95,17 @@ public class createworkout_addexercise extends Activity {
             //if its true at that spot, then i want to put my values from my corresponding
             //allvalues array into a new array to be sent back to other activity
             x = sparseArray.keyAt(i);
-            selected.add(allvalues.get(x));
-
+            //if selected doesnt already contain the value im about to add, then add it
+            boolean check = true;
+            for(int j=0; j<selected.size();j++){
+                if(selected.get(j).name.equals(allvalues.get(x).name)){
+                    //set it false, if the same name is already in the list
+                    check = false;
+                }
+            }
+            if(check){
+                selected.add(allvalues.get(x));
+            }
         }
         Intent intent = new Intent(this,CreateWorkoutPage.class);
 

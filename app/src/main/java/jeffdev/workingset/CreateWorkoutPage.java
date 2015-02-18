@@ -1,5 +1,6 @@
 package jeffdev.workingset;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import java.util.List;
 public class CreateWorkoutPage extends ActionBarActivity {
 
     ArrayList<exerciseStorage> selected;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,6 @@ public class CreateWorkoutPage extends ActionBarActivity {
 //            for(int i=0; i<selected.size();i++){
 //                Log.d("name:",selected.get(i).name);
 //            }
-
-            //need code to remove duplicates from it
 
             List<String> values = new ArrayList<String>();
             for(int i=0;i<selected.size();i++){
@@ -62,7 +62,16 @@ public class CreateWorkoutPage extends ActionBarActivity {
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    //change this so that it removes the exercise.
+                    Toast toast = Toast.makeText(getApplicationContext(),selected.get(position).name+" has been removed", Toast.LENGTH_LONG);
+                    selected.remove(position);
+                    Intent intent = new Intent(context,CreateWorkoutPage.class);
+
+                    Bundle bundleObject = new Bundle();
+                    bundleObject.putSerializable("exercises",selected);
+
+                    intent.putExtras(bundleObject);
+                    toast.show();
+                    startActivity(intent);
                     return true;
                 }
             });
