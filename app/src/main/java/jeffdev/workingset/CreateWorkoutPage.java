@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,6 +57,9 @@ public class CreateWorkoutPage extends ActionBarActivity {
                     toastTV.setTextSize(25);
                     toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
                     toast.show();
+//                    DatabaseHandler db = new DatabaseHandler(context);
+//                    db.test();
+
                 }
             });
 
@@ -72,6 +76,8 @@ public class CreateWorkoutPage extends ActionBarActivity {
                     intent.putExtras(bundleObject);
                     toast.show();
                     startActivity(intent);
+//                    DatabaseHandler db = new DatabaseHandler(context);
+//                    db.resettables();
                     return true;
                 }
             });
@@ -91,6 +97,45 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
         intent.putExtras(bundleObject);
         startActivity(intent);
+    }
+
+    public void submitworkout(View view){
+        EditText nameinput = (EditText) findViewById(R.id.workoutname);
+        String workoutname = nameinput.getText().toString();
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        int workoutcheck = db.addworkout(workoutname);
+        if(workoutcheck == 1){
+            //then its already there
+            Toast toast = Toast.makeText(getApplicationContext(),"That workout is already created...\nplease create a new one", Toast.LENGTH_LONG);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(25);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+            toast.show();
+            Intent intent = new Intent(this,CreateWorkoutPage.class);
+            Bundle bundleObject = new Bundle();
+            bundleObject.putSerializable("exercises",selected);
+
+            intent.putExtras(bundleObject);
+            startActivity(intent);
+        }
+        else {
+            DatabaseHandler dbmakeup = new DatabaseHandler(this);
+
+            for (int i = 0; i < selected.size(); i++) {
+                dbmakeup.addmakeup(selected.get(i).name, workoutname);
+                Context context = getApplicationContext();
+                CharSequence text = "New workout successfully added";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+                Intent intent = new Intent(this, HomePage.class);
+                startActivity(intent);
+            }
+        }
     }
 
 

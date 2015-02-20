@@ -8,7 +8,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/workoutname"
         android:hint="Name of workout"
         android:textSize="35dp" />
 
@@ -37,7 +37,8 @@
             android:id="@+id/imageButton5"
             android:src="@drawable/circlecheck"
             android:background="#fff0f0f0"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:onClick="submitworkout"/>
 
     </LinearLayout>
 

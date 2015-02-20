@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_EXERCISE_TABLE = "CREATE TABLE exercise(name TEXT primary key,description TEXT)";
         String CREATE_MAKE_UP_TABLE = "CREATE TABLE makeup(Ename TEXT,Wname TEXT)";
+        String CREATE_WORKOUT_TABLE = "CREATE TABLE workout(Name TEXT UNIQUE)";
         String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,reps INTEGER, weight REAL)";
-        String CREATE_WORKOUT_TABLE = "CREATE TABLE workout(name TEXT,date TEXT, length TEXT, PRIMARY KEY(name,date))";
+        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout(name TEXT,date TEXT, length TEXT, PRIMARY KEY(name,date))";
 
         db.execSQL(CREATE_EXERCISE_TABLE);
         db.execSQL(CREATE_MAKE_UP_TABLE);
         db.execSQL(CREATE_SET_TABLE);
         db.execSQL(CREATE_WORKOUT_TABLE);
+        db.execSQL(CREATE_COMPLETED_WORKOUT_TABLE);
     }
 
 
@@ -39,24 +42,58 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS exercise");
         db.execSQL("DROP TABLE IF EXISTS makeup");
-        db.execSQL("DROP TABLE IF EXISTS doesset");
         db.execSQL("DROP TABLE IF EXISTS workout");
+        db.execSQL("DROP TABLE IF EXISTS doesset");
+        db.execSQL("DROP TABLE IF EXISTS completedworkout");
 
         // Create tables again
         onCreate(db);
     }
-//for testing purposes, deletes the tables
-    public void resettables() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS exercise");
-        db.execSQL("DROP TABLE IF EXISTS makeup");
-        db.execSQL("DROP TABLE IF EXISTS doesset");
-        db.execSQL("DROP TABLE IF EXISTS workout");
 
-        onCreate(db);
+    public void test(){
+        exerciseStorage exercise = new exerciseStorage();
+        String query = "Select * from workout";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Log.d("size",String.valueOf(cursor.getCount()));
+        cursor.moveToFirst();
+        for(int i=0; i < cursor.getCount(); i++) {
+            Log.d("workout", cursor.getString(0));
+            cursor.moveToNext();
+        }
     }
 
+    //return 0 if successful, 1 if its already there
+    public int addworkout(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name",name);
+        try{
+            db.insertOrThrow("workout",null,values);
+        }catch(android.database.sqlite.SQLiteConstraintException e){
+            return 1;
+        }
+        db.close();
+        return 0;
+    }
+
+    //if performance is an issue, turn Ename into an array and do it all with one writable db
+    //return 0 if successful, 1 if its already there
+    public int addmakeup(String Ename, String Wname){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Ename",Ename);
+        values.put("Wname",Wname);
+        try{
+            db.insertOrThrow("makeup",null,values);
+        }catch(android.database.sqlite.SQLiteConstraintException e){
+            return 1;
+        }
+        db.close();
+        return 0;
+    }
+
+    //return 0 if successful, 1 if its already there
     public int addExercise(String name, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -64,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("description", description);
         try {
             db.insertOrThrow("exercise", null, values);
-        }catch(android.database.sqlite.SQLiteConstraintException e){
+        }catch(Exception e){
             return 1;
         }
         db.close();
@@ -92,7 +129,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
 
     }
-
 
     public exerciseStorage getSingleExercise(String name){
         exerciseStorage exercise = new exerciseStorage();
@@ -135,4 +171,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.beginTransaction();
     }
 
+    //for testing purposes, deletes the tables
+    public void resettables() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS exercise");
+        db.execSQL("DROP TABLE IF EXISTS makeup");
+        db.execSQL("DROP TABLE IF EXISTS doesset");
+        db.execSQL("DROP TABLE IF EXISTS workout");
+
+        onCreate(db);
+    }
 }

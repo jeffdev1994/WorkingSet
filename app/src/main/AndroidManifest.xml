@@ -20,7 +20,8 @@
             android:name=".ExercisePage"
             android:label="Exercises"
             android:parentActivityName=".HomePage"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
@@ -43,7 +44,8 @@
             android:name=".CreateWorkoutPage"
             android:label="Create Workout"
             android:parentActivityName=".HomePage"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
