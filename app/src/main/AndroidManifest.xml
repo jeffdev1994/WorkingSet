@@ -54,7 +54,7 @@
             android:name=".createworkout_addexercise"
             android:label="Add Exercises"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
     </application>

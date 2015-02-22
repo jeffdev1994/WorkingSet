@@ -26,7 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_MAKE_UP_TABLE = "CREATE TABLE makeup(Ename TEXT,Wname TEXT)";
         String CREATE_WORKOUT_TABLE = "CREATE TABLE workout(Name TEXT UNIQUE)";
         String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,reps INTEGER, weight REAL)";
-        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout(name TEXT,date TEXT, length TEXT, PRIMARY KEY(name,date))";
+        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout1(name TEXT,date TEXT, length TEXT, PRIMARY KEY(name,date))";
 
         db.execSQL(CREATE_EXERCISE_TABLE);
         db.execSQL(CREATE_MAKE_UP_TABLE);
@@ -44,7 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS makeup");
         db.execSQL("DROP TABLE IF EXISTS workout");
         db.execSQL("DROP TABLE IF EXISTS doesset");
-        db.execSQL("DROP TABLE IF EXISTS completedworkout");
+        db.execSQL("DROP TABLE IF EXISTS completedworkout1");
 
         // Create tables again
         onCreate(db);

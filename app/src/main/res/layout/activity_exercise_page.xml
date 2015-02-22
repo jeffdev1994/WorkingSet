@@ -37,14 +37,15 @@
             android:onClick="searchexercise"/>
 
         <ImageButton
-            android:layout_width="45dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/addexercisebutton"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/plus1"
             android:onClick="exerciseaddbutton"
             android:background="#fff0f0f0"
             android:tint="#ff040404"
-            android:paddingLeft="15dp" />
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp" />
 
 
     </LinearLayout>

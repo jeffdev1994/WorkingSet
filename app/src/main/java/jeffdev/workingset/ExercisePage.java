@@ -134,6 +134,7 @@ public class ExercisePage extends ActionBarActivity {
             }
         });
 
+        //gets all the exercises that 'match' the search(if its substring)
         DatabaseHandler db = new DatabaseHandler(this);
         allvalues = db.getExercise(searchinput.getText().toString());
         List<String> values = new ArrayList<String>();

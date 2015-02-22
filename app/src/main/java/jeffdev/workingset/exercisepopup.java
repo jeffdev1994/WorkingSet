@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.util.Log;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
+
 
 
 public class exercisepopup extends Activity {
@@ -20,9 +24,22 @@ public class exercisepopup extends Activity {
     int update_flag = 0;
     String updatingname;
 
+
+    //takes over the backkey
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this, ExercisePage.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_exercisepopup);
         Intent intent = getIntent();
         //Log.d("type",intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1));
