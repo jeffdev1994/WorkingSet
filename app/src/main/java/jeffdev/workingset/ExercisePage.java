@@ -32,6 +32,18 @@ public class ExercisePage extends ActionBarActivity {
     final Context context = this;
     public final static String OPTION_MESSAGE1 = "jeffdev.workingset.exercisename";
     public final static String OPTION_MESSAGE2 = "jeffdev.workingset.exercisedescription";
+    
+
+    //takes over the backkey
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this,HomePage.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     //could set it up that the search button just recalls this, just need to learn to save instance thing abit
     //so that i can place what is in the search bar, back in after calling it again, cause without that
@@ -196,12 +208,12 @@ public class ExercisePage extends ActionBarActivity {
 
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_exercise_page, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_exercise_page, menu);
+        return true;
+    }
 
 
 
@@ -215,6 +227,12 @@ public class ExercisePage extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_help ){
+            Intent intent = new Intent(this,exercises_help.class);
+            startActivity(intent);
+            return true;
+
         }
 
         return super.onOptionsItemSelected(item);

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,17 +27,30 @@ public class CreateWorkoutPage extends ActionBarActivity {
     ArrayList<exerciseStorage> selected;
     Context context = this;
 
+    //takes over the backkey
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this,HomePage.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_workout_page);
 
         Bundle bundleObject = getIntent().getExtras();
-
+        EditText name = (EditText) findViewById(R.id.workoutname);
         //if it doesnt equal null, then display the stuff up, otherwise maybe a textview saying to add some exercises with the plus
         //or somehting, maybe just blank
         if(bundleObject != null){
             selected = (ArrayList<exerciseStorage>) bundleObject.getSerializable("exercises");
+            name.setText(bundleObject.getString("name"));
+
 //            for(int i=0; i<selected.size();i++){
 //                Log.d("name:",selected.get(i).name);
 //            }
@@ -91,9 +105,12 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
     public void addexercise(View view){
 
+        EditText name = (EditText) findViewById(R.id.workoutname);
+
         Intent intent = new Intent(this,createworkout_addexercise.class);
         Bundle bundleObject = new Bundle();
         bundleObject.putSerializable("exercises",selected);
+        bundleObject.putString("name",name.getText().toString());
 
         intent.putExtras(bundleObject);
         startActivity(intent);
@@ -107,10 +124,10 @@ public class CreateWorkoutPage extends ActionBarActivity {
         int workoutcheck = db.addworkout(workoutname);
         if(workoutcheck == 1){
             //then its already there
-            Toast toast = Toast.makeText(getApplicationContext(),"That workout is already created...\nplease create a new one", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(),"Workout name already exists...\nplease try a different one", Toast.LENGTH_LONG);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(25);
+            toastTV.setTextSize(20);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
             toast.show();
             Intent intent = new Intent(this,CreateWorkoutPage.class);
@@ -139,12 +156,12 @@ public class CreateWorkoutPage extends ActionBarActivity {
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_create_workout_page, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_create_workout_page, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,7 +171,9 @@ public class CreateWorkoutPage extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this,new_workout_help.class);
+            startActivity(intent);
             return true;
         }
 

@@ -24,27 +24,13 @@ public class exercisepopup extends Activity {
     int update_flag = 0;
     String updatingname;
 
-
-    //takes over the backkey
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(this, ExercisePage.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_exercisepopup);
         Intent intent = getIntent();
-        //Log.d("type",intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1));
         //put the passed on info into the fields.
-//        try{
         if(intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1) != null) {
             String name = intent.getStringExtra(exercisepopup_option.OPTION_MESSAGE1);
             this.updatingname = name;
@@ -55,9 +41,6 @@ public class exercisepopup extends Activity {
             descriptionfield.setText(description);
             update_flag = 1;
         }
-//        }catch(NullPointerException e){
-//            //do nothing, if it doesnt have extra, then let it be
-//        }
     }
 
     public void submitexercise(View view) {

@@ -9,5 +9,7 @@
     <string name="title_activity_exercisepopup">New exercise</string>
     <string name="title_activity_create_workout_page">CreateWorkoutPage</string>
     <string name="title_activity_createworkout_addexercise">createworkout_addexercise</string>
+    <string name="title_activity_exercises_help">exercises_help</string>
+    <string name="title_activity_new_workout_help">new_workout_help</string>
 
 </resources>

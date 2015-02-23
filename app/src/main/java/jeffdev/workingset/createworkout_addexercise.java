@@ -25,15 +25,18 @@ public class createworkout_addexercise extends Activity {
 
     List<exerciseStorage> allvalues;
     ArrayList<exerciseStorage> selected;
+    String workoutname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createworkout_addexercise);
 
+        //it will now nver be null, i dont think, so this may cause crash if you pass name and not any values? keep watch
         Bundle bundleObject = getIntent().getExtras();
         if(bundleObject != null) {
             selected = (ArrayList<exerciseStorage>) bundleObject.getSerializable("exercises");
+            workoutname = bundleObject.getString("name");
         }
         else{
             selected = new ArrayList<exerciseStorage>();
@@ -111,6 +114,7 @@ public class createworkout_addexercise extends Activity {
 
         Bundle bundleObject = new Bundle();
         bundleObject.putSerializable("exercises",selected);
+        bundleObject.putString("name",workoutname);
 
         intent.putExtras(bundleObject);
         startActivity(intent);

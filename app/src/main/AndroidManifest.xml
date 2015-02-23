@@ -20,8 +20,7 @@
             android:name=".ExercisePage"
             android:label="Exercises"
             android:parentActivityName=".HomePage"
-            android:windowSoftInputMode="stateHidden"
-            android:noHistory="true">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
@@ -41,11 +40,17 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
+            android:name=".exercises_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
             android:name=".CreateWorkoutPage"
             android:label="Create Workout"
             android:parentActivityName=".HomePage"
-            android:windowSoftInputMode="stateHidden"
-            android:noHistory="true">
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
@@ -55,6 +60,13 @@
             android:label="Add Exercises"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".new_workout_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog"
             android:windowSoftInputMode="stateHidden">
         </activity>
     </application>

@@ -14,17 +14,18 @@
         android:showDividers="middle"
         android:divider="@drawable/emptymainseperate"
         tools:context=".HomePage"
-        android:paddingTop="5dp">
+        android:paddingTop="30dp"
+        android:baselineAligned="false">
 
 
-        <ImageButton
-            android:layout_width="42dp"
-            android:layout_height="39dp"
-            android:id="@+id/imageButton"
-            android:layout_gravity="right"
-            android:src="@android:drawable/ic_menu_help"
-            android:background="@color/background_material_light"
-            android:tint="#ff5ea7c8" />
+        <!--<ImageButton-->
+            <!--android:layout_width="42dp"-->
+            <!--android:layout_height="39dp"-->
+            <!--android:id="@+id/imageButton"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:src="@android:drawable/ic_menu_help"-->
+            <!--android:background="@color/background_material_light"-->
+            <!--android:tint="#ff5ea7c8" />-->
 
         <Button
             android:id="@+id/start_workout_button"
@@ -46,6 +47,18 @@
             android:id="@+id/past_workout_button"
 
             android:text="Past Workout"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+
+            android:layout_width="260dp"
+            android:layout_height="60dp"
+            android:background="@drawable/homepagebuttons"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/edit_workout_button"
+
+            android:text="Edit Workout"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
 

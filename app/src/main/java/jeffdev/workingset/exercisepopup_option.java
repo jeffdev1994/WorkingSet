@@ -19,16 +19,6 @@ public class exercisepopup_option extends Activity{
     public final static String OPTION_MESSAGE1 = "jeffdev.workingset.exercisename";
     public final static String OPTION_MESSAGE2 = "jeffdev.workingset.exercisedescription";
 
-    //takes over the backkey
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(this, ExercisePage.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
