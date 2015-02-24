@@ -67,7 +67,15 @@
             android:label="Help?"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Dialog"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".edit_workout_choose"
+            android:label="@string/title_activity_edit_workout_choose"
+            android:parentActivityName=".HomePage" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jeffdev.workingset.HomePage" />
         </activity>
     </application>
 

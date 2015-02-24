@@ -141,6 +141,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return exercise;
     }
 
+    public List<String> getAllWorkout(){
+        List<String> workoutlist = new ArrayList<String>();
+        String query = "select * from workout";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        String workout;
+        if(cursor.moveToFirst()){
+            do{
+                 workout = cursor.getString(0);
+                workoutlist.add(workout);
+            }while(cursor.moveToNext());
+        }
+        return workoutlist;
+    }
+
     public List<exerciseStorage> getExercise(String search){
         List<exerciseStorage> exerciselist = new ArrayList<exerciseStorage>();
         String query;

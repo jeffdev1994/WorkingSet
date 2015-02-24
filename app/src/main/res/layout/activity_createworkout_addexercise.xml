@@ -4,19 +4,23 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Finish"
-        android:id="@+id/button"
-        android:onClick="submitexercises"/>
 
     <ListView
         android:id="@+id/neworkoutexerciselist"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_weight="1.0">
     </ListView>
 
+    <Button
+        android:background="#ff3b72cd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="  Add to workout  "
+        android:id="@+id/button"
+        android:onClick="submitexercises"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#fff0f0f0" />
 
 
 </LinearLayout>

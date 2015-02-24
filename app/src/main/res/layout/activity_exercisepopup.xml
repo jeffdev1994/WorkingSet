@@ -38,10 +38,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#ff3b72cd"
+            android:textColor="#fff0f0f0"
             android:text="Submit"
             android:id="@+id/popupexercisebutton"
             android:layout_gravity="center_horizontal"
-            android:onClick="submitexercise"/>
+            android:onClick="submitexercise"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
 
 </LinearLayout>
