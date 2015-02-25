@@ -71,11 +71,18 @@
         </activity>
         <activity
             android:name=".edit_workout_choose"
-            android:label="@string/title_activity_edit_workout_choose"
+            android:label="Choose workout"
             android:parentActivityName=".HomePage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
+        </activity>
+        <activity
+            android:name=".workoutpopup_option"
+            android:label="@string/title_activity_workoutpopup_option"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 

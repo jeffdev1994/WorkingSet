@@ -108,6 +108,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return 0;
     }
 
+    public int deleteWorkout(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Delete from workout where name = '" + name + "'";
+        Cursor cursor = db.rawQuery(query,null);
+        cursor.moveToFirst();
+        query = "Delete from makeup where Wname = '" + name + "'";
+        cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){}
+        }
+        db.close();
+        return 0;
+    }
+
     public void deleteExercise(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "Delete from exercise where name = '" + name + "'";
@@ -139,6 +153,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         exercise.setName(cursor.getString(0));
         exercise.setDescription(cursor.getString(1));
         return exercise;
+    }
+
+    public List<makeupStorage> getMakeup(String name){
+        List<makeupStorage> makeuplist = new ArrayList<makeupStorage>();
+        String query = "Select * from makeup where Wname = '" + name + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()){
+            do{
+                makeupStorage makeup = new makeupStorage();
+                makeup.Ename = cursor.getString(0);
+                makeup.Wname = cursor.getString(1);
+
+                makeuplist.add(makeup);
+            }while(cursor.moveToNext());
+        }
+        return makeuplist;
     }
 
     public List<String> getAllWorkout(){

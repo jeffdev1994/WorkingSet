@@ -1,5 +1,6 @@
 package jeffdev.workingset;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.util.List;
 public class edit_workout_choose extends ActionBarActivity {
 
     List<String> allvalues;
+    Context context = this;
 
     //takes over the backkey
     @Override
@@ -51,23 +53,21 @@ public class edit_workout_choose extends ActionBarActivity {
 //
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-//
+//                  allvalues.get(i);
 //            }
 //        });
 
         //long click to get a choice between quickview(shows toast of the exercises in the workout) or delete
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                String exercisename = allvalues.get(position).name;
-//                String exercisedescription = allvalues.get(position).description;
-//                Intent intent = new Intent(context,exercisepopup_option.class);
-//                intent.putExtra(OPTION_MESSAGE1,exercisename);
-//                intent.putExtra(OPTION_MESSAGE2,exercisedescription);
-//                startActivity(intent);
-//                return true;
-//            }
-//        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String workoutname = allvalues.get(position);
+                Intent intent = new Intent(context,workoutpopup_option.class);
+                intent.putExtra("name",workoutname);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
 

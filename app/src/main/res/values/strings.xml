@@ -12,5 +12,6 @@
     <string name="title_activity_exercises_help">exercises_help</string>
     <string name="title_activity_new_workout_help">new_workout_help</string>
     <string name="title_activity_edit_workout_choose">edit_workout_choose</string>
+    <string name="title_activity_workoutpopup_option">workoutpopup_option</string>
 
 </resources>
