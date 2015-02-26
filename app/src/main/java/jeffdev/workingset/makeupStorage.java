@@ -1,9 +1,12 @@
 package jeffdev.workingset;
 
+import java.io.Serializable;
+
 /**
  * Created by Jeff on 2015-02-24.
  */
-public class makeupStorage {
+public class makeupStorage implements Serializable {
+
     public String Wname;
     public String Ename;
 

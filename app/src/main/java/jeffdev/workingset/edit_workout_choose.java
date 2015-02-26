@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,13 +50,28 @@ public class edit_workout_choose extends ActionBarActivity {
         listView.setAdapter(adapter);
 
         //on click, go to the page to let them edit the exercises in the workout
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-//                  allvalues.get(i);
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                String name = allvalues.get(position);
+                Intent intent = new Intent(context,CreateWorkoutPage.class);
+                //also need to send the workouts in bundle object to put in listview, just a string list
+                //also put the name in the bundle object
+                DatabaseHandler db = new DatabaseHandler(context);
+                //shouldnt be sending a list of something different, i believe exercises so i will need to take this list
+                //and get exercise list from it.
+                ArrayList<makeupStorage> exercises = db.getMakeup_list(name);
+                Bundle bundleObject = new Bundle();
+                bundleObject.putSerializable("exercises",exercises);
+                bundleObject.putString("name",name);
+                bundleObject.putString("editworkout", "true");
+
+                intent.putExtras(bundleObject);
+
+                startActivity(intent);
+            }
+        });
 
         //long click to get a choice between quickview(shows toast of the exercises in the workout) or delete
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

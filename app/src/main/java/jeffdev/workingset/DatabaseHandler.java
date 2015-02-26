@@ -160,14 +160,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String query = "Select * from makeup where Wname = '" + name + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query,null);
-        if(cursor.moveToFirst()){
+        if(cursor.moveToLast()){
             do{
                 makeupStorage makeup = new makeupStorage();
                 makeup.Ename = cursor.getString(0);
                 makeup.Wname = cursor.getString(1);
 
                 makeuplist.add(makeup);
-            }while(cursor.moveToNext());
+            }while(cursor.moveToPrevious());
+        }
+        return makeuplist;
+    }
+
+    //was easier to do this, then adjust abunch of code when i needed the list to be serializable
+    public ArrayList<makeupStorage> getMakeup_list(String name){
+        ArrayList<makeupStorage> makeuplist = new ArrayList<makeupStorage>();
+        String query = "Select * from makeup where Wname = '" + name + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToLast()){
+            do{
+                makeupStorage makeup = new makeupStorage();
+                makeup.Ename = cursor.getString(0);
+                makeup.Wname = cursor.getString(1);
+
+                makeuplist.add(makeup);
+            }while(cursor.moveToPrevious());
         }
         return makeuplist;
     }
@@ -178,11 +196,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query,null);
         String workout;
-        if(cursor.moveToFirst()){
+        if(cursor.moveToLast()){
             do{
                  workout = cursor.getString(0);
                 workoutlist.add(workout);
-            }while(cursor.moveToNext());
+            }while(cursor.moveToPrevious());
         }
         return workoutlist;
     }
@@ -190,24 +208,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<exerciseStorage> getExercise(String search){
         List<exerciseStorage> exerciselist = new ArrayList<exerciseStorage>();
         String query;
-        //if it is null, return the whole list
-//        if (search.equals("all")){
-//            query = "select * from exercise";
-//        }
-        //need to fill this in, it will be for searching.
         query =  "Select * from exercise where name like '%" + search + "%'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
+        if(cursor.moveToLast()){
             do{
                 exerciseStorage exercise = new exerciseStorage();
                 exercise.setName(cursor.getString(0));
                 exercise.setDescription(cursor.getString(1));
 
                 exerciselist.add(exercise);
-            }while(cursor.moveToNext());
+            }while(cursor.moveToPrevious());
         }
         return exerciselist;
     }

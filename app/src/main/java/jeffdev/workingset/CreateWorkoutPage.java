@@ -26,6 +26,7 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
     ArrayList<exerciseStorage> selected;
     Context context = this;
+    boolean editing;
 
     //takes over the backkey
     @Override
@@ -46,11 +47,19 @@ public class CreateWorkoutPage extends ActionBarActivity {
         Bundle bundleObject = getIntent().getExtras();
         EditText name = (EditText) findViewById(R.id.workoutname);
         //if it doesnt equal null, then display the stuff up, otherwise maybe a textview saying to add some exercises with the plus
-        //or somehting, maybe just blank
+        //or something, maybe just blank
         if(bundleObject != null){
             selected = (ArrayList<exerciseStorage>) bundleObject.getSerializable("exercises");
             name.setText(bundleObject.getString("name"));
 
+            if(bundleObject.getString("editworkout").equals("true")){
+                editing = true;
+                //then lock the edittext
+                name.setEnabled(false);
+                name.setClickable(false);
+                name.setFocusable(false);
+                name.setFocusableInTouchMode(false);
+            }
 //            for(int i=0; i<selected.size();i++){
 //                Log.d("name:",selected.get(i).name);
 //            }
