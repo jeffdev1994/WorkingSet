@@ -27,6 +27,9 @@ public class CreateWorkoutPage extends ActionBarActivity {
     ArrayList<exerciseStorage> selected;
     Context context = this;
     boolean editing;
+    EditText globalname;
+
+
 
     //takes over the backkey
     @Override
@@ -39,6 +42,8 @@ public class CreateWorkoutPage extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    //need to make keyboard while editing the name, have a done button. can get this from the search code
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +55,11 @@ public class CreateWorkoutPage extends ActionBarActivity {
         //or something, maybe just blank
         if(bundleObject != null){
             selected = (ArrayList<exerciseStorage>) bundleObject.getSerializable("exercises");
+            this.globalname = name;
             name.setText(bundleObject.getString("name"));
 
-            if(bundleObject.getString("editworkout").equals("true")){
+
+            if(bundleObject.containsKey("editworkout")){
                 editing = true;
                 //then lock the edittext
                 name.setEnabled(false);
@@ -95,6 +102,10 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
                     Bundle bundleObject = new Bundle();
                     bundleObject.putSerializable("exercises",selected);
+                    bundleObject.putString("name",globalname.getText().toString());
+                    if(editing == true){
+                        bundleObject.putString("editworkout", "true");
+                    }
 
                     intent.putExtras(bundleObject);
                     toast.show();
@@ -120,6 +131,9 @@ public class CreateWorkoutPage extends ActionBarActivity {
         Bundle bundleObject = new Bundle();
         bundleObject.putSerializable("exercises",selected);
         bundleObject.putString("name",name.getText().toString());
+        if(editing == true){
+            bundleObject.putString("editworkout", "true");
+        }
 
         intent.putExtras(bundleObject);
         startActivity(intent);
@@ -130,29 +144,17 @@ public class CreateWorkoutPage extends ActionBarActivity {
         String workoutname = nameinput.getText().toString();
 
         DatabaseHandler db = new DatabaseHandler(this);
-        int workoutcheck = db.addworkout(workoutname);
-        if(workoutcheck == 1){
-            //then its already there
-            Toast toast = Toast.makeText(getApplicationContext(),"Workout name already exists...\nplease try a different one", Toast.LENGTH_LONG);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(20);
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
-            toast.show();
-            Intent intent = new Intent(this,CreateWorkoutPage.class);
-            Bundle bundleObject = new Bundle();
-            bundleObject.putSerializable("exercises",selected);
 
-            intent.putExtras(bundleObject);
-            startActivity(intent);
-        }
-        else {
-            DatabaseHandler dbmakeup = new DatabaseHandler(this);
+        if(editing == true){
+           //List<makeupStorage> originalexercises = db.getMakeup(workoutname);
+            db.deleteWorkout(workoutname);
+            db.addworkout(workoutname);
 
             for (int i = 0; i < selected.size(); i++) {
-                dbmakeup.addmakeup(selected.get(i).name, workoutname);
+                db.addmakeup(selected.get(i).name, workoutname);
+            }
                 Context context = getApplicationContext();
-                CharSequence text = "New workout successfully added";
+                CharSequence text = "Workout successfully updated";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -160,6 +162,40 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
                 Intent intent = new Intent(this, HomePage.class);
                 startActivity(intent);
+
+
+        }
+        else {
+            int workoutcheck = db.addworkout(workoutname);
+            if (workoutcheck == 1) {
+                //then its already there
+                Toast toast = Toast.makeText(getApplicationContext(), "Workout name already exists...\nplease try a different one", Toast.LENGTH_LONG);
+                LinearLayout toastLayout = (LinearLayout) toast.getView();
+                TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                toastTV.setTextSize(20);
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+                toast.show();
+                Intent intent = new Intent(this, CreateWorkoutPage.class);
+                Bundle bundleObject = new Bundle();
+                bundleObject.putSerializable("exercises", selected);
+
+                intent.putExtras(bundleObject);
+                startActivity(intent);
+            } else {
+                DatabaseHandler dbmakeup = new DatabaseHandler(this);
+
+                for (int i = 0; i < selected.size(); i++) {
+                    dbmakeup.addmakeup(selected.get(i).name, workoutname);
+                    Context context = getApplicationContext();
+                    CharSequence text = "New workout successfully added";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    Intent intent = new Intent(this, HomePage.class);
+                    startActivity(intent);
+                }
             }
         }
     }

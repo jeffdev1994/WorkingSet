@@ -146,7 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public exerciseStorage getSingleExercise(String name){
         exerciseStorage exercise = new exerciseStorage();
-        String query = "Select * from exercise where name = " + name;
+        String query = "Select * from exercise where name = '" + name +"'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();

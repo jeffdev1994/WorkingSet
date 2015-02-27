@@ -26,6 +26,7 @@ public class createworkout_addexercise extends Activity {
     List<exerciseStorage> allvalues;
     ArrayList<exerciseStorage> selected;
     String workoutname;
+    boolean editing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,9 @@ public class createworkout_addexercise extends Activity {
         if(bundleObject != null) {
             selected = (ArrayList<exerciseStorage>) bundleObject.getSerializable("exercises");
             workoutname = bundleObject.getString("name");
+            if(bundleObject.containsKey("editworkout")) {
+                editing = true;
+            }
         }
         else{
             selected = new ArrayList<exerciseStorage>();
@@ -115,6 +119,9 @@ public class createworkout_addexercise extends Activity {
         Bundle bundleObject = new Bundle();
         bundleObject.putSerializable("exercises",selected);
         bundleObject.putString("name",workoutname);
+        if(editing == true) {
+            bundleObject.putString("editworkout","true");
+        }
 
         intent.putExtras(bundleObject);
         startActivity(intent);

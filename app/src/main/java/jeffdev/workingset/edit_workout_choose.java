@@ -61,7 +61,11 @@ public class edit_workout_choose extends ActionBarActivity {
                 DatabaseHandler db = new DatabaseHandler(context);
                 //shouldnt be sending a list of something different, i believe exercises so i will need to take this list
                 //and get exercise list from it.
-                ArrayList<makeupStorage> exercises = db.getMakeup_list(name);
+                ArrayList<makeupStorage> makeup = db.getMakeup_list(name);
+                ArrayList<exerciseStorage> exercises = new ArrayList<exerciseStorage>();
+                for(int i = 0;i<makeup.size();i++){
+                    exercises.add(db.getSingleExercise(makeup.get(i).Ename));
+                }
                 Bundle bundleObject = new Bundle();
                 bundleObject.putSerializable("exercises",exercises);
                 bundleObject.putString("name",name);
