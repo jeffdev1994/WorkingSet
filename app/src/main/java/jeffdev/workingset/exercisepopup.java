@@ -48,6 +48,14 @@ public class exercisepopup extends Activity {
             EditText nameinput = (EditText) findViewById(R.id.popupexercisename);
             String name = nameinput.getText().toString();
 
+            //get rid of leading and trailing spaces from workoutname
+            while(name.startsWith(" ")){
+                name = name.substring(1);
+            }
+            while(name.endsWith(" ")){
+                name = name.substring(0,name.length()-1);
+            }
+
             EditText descriptioninput = (EditText) findViewById(R.id.popupexercisedescription);
             String description = descriptioninput.getText().toString();
 
@@ -57,7 +65,7 @@ public class exercisepopup extends Activity {
             if (addresult == 1) {
                 Context context = getApplicationContext();
                 CharSequence text = "Exercise already available";
-                int duration = Toast.LENGTH_SHORT;
+                int duration = Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
@@ -81,14 +89,34 @@ public class exercisepopup extends Activity {
 
             DatabaseHandler db = new DatabaseHandler(this);
             //if it the exercise name is already in the db
-            db.updateExercise(this.updatingname, name, description);
-            //display the toast
-            Context context = getApplicationContext();
-            CharSequence text = "Exercise successfully updated";
-            int duration = Toast.LENGTH_SHORT;
+            int failed = db.updateExercise(this.updatingname, name, description);
+            //if it worked
+            if(failed == 0) {
+                //display the toast
+                Context context = getApplicationContext();
+                CharSequence text = "Exercise successfully updated";
+                int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+            //if it failed
+            else if(failed == 1){
+                Intent intent = new Intent(this,exercisepopup.class);
+                intent.putExtra("jeffdev.workingset.exercisename",updatingname);
+                intent.putExtra("jeffdev.workingset.exercisedescription",description);
+
+                CharSequence text = "Exercise name already exists, please try another name";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+
+                startActivity(intent);
+                return;
+
+
+            }
         }
         else{
             Context context = getApplicationContext();

@@ -143,6 +143,14 @@ public class CreateWorkoutPage extends ActionBarActivity {
         EditText nameinput = (EditText) findViewById(R.id.workoutname);
         String workoutname = nameinput.getText().toString();
 
+        //get rid of leading and trailing spaces from workoutname
+        while(workoutname.startsWith(" ")){
+            workoutname = workoutname.substring(1);
+        }
+        while(workoutname.endsWith(" ")){
+            workoutname = workoutname.substring(0,workoutname.length()-1);
+        }
+
         DatabaseHandler db = new DatabaseHandler(this);
 
         if(editing == true){
@@ -181,21 +189,24 @@ public class CreateWorkoutPage extends ActionBarActivity {
 
                 intent.putExtras(bundleObject);
                 startActivity(intent);
-            } else {
+            }
+            else {
                 DatabaseHandler dbmakeup = new DatabaseHandler(this);
 
                 for (int i = 0; i < selected.size(); i++) {
                     dbmakeup.addmakeup(selected.get(i).name, workoutname);
-                    Context context = getApplicationContext();
-                    CharSequence text = "New workout successfully added";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                    Intent intent = new Intent(this, HomePage.class);
-                    startActivity(intent);
                 }
+
+                Context context = getApplicationContext();
+                CharSequence text = "New workout successfully added";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+                Intent intent = new Intent(this, HomePage.class);
+                startActivity(intent);
+
             }
         }
     }
@@ -214,6 +225,8 @@ public class CreateWorkoutPage extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //can add in an extra if for if its editing or not
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_help) {

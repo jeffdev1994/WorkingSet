@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="To add a new exercise, press the &apos;plus&apos; button. Next input the name and a description of the exercise, then click submit."
+            android:text="To add a new exercise, press the &apos;plus&apos; button. Next input the name and a description of the exercise, then click submit.\nplease note:\n*leading or trailing spaces will be removed from your exercises name\n*creating a new exercise, which already has an existing name, the new one will be ignored, and the old exercise will be kept"
             android:id="@+id/textView2" />
 
         <TextView

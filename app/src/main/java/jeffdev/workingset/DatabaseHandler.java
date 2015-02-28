@@ -71,6 +71,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             db.insertOrThrow("workout",null,values);
         }catch(android.database.sqlite.SQLiteConstraintException e){
+            db.close();
             return 1;
         }
         db.close();
@@ -87,6 +88,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             db.insertOrThrow("makeup",null,values);
         }catch(android.database.sqlite.SQLiteConstraintException e){
+            db.close();
             return 1;
         }
         db.close();
@@ -102,6 +104,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             db.insertOrThrow("exercise", null, values);
         }catch(Exception e){
+            db.close();
             return 1;
         }
         db.close();
@@ -130,8 +133,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
 
     }
-
-    public void updateExercise(String oldname, String newname, String description){
+    //return 0 if successful, 1 if its already there
+    public int updateExercise(String oldname, String newname, String description){
         SQLiteDatabase db = this.getWritableDatabase();
         //String query = "Update exercise set name = " + newname + ", description = " + description + " where name = '" + oldname+"'";
         //Cursor cursor = db.rawQuery(query,null);
@@ -139,9 +142,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name",newname);
         values.put("description", description);
-        db.update("exercise",values,"name = ?", new String [] {oldname});
+        try {
+            db.updateWithOnConflict("exercise", values, "name = ?", new String[]{oldname}, SQLiteDatabase.CONFLICT_FAIL);
+        }catch(Exception e){
+            return 1;
+        }
         db.close();
-
+        return 0;
     }
 
     public exerciseStorage getSingleExercise(String name){
@@ -152,6 +159,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
         exercise.setName(cursor.getString(0));
         exercise.setDescription(cursor.getString(1));
+        db.close();
         return exercise;
     }
 
@@ -169,6 +177,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 makeuplist.add(makeup);
             }while(cursor.moveToPrevious());
         }
+        db.close();
         return makeuplist;
     }
 
@@ -187,6 +196,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 makeuplist.add(makeup);
             }while(cursor.moveToPrevious());
         }
+        db.close();
         return makeuplist;
     }
 
@@ -202,6 +212,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 workoutlist.add(workout);
             }while(cursor.moveToPrevious());
         }
+        db.close();
         return workoutlist;
     }
 
@@ -221,6 +232,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 exerciselist.add(exercise);
             }while(cursor.moveToPrevious());
         }
+        db.close();
         return exerciselist;
     }
 

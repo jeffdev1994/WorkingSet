@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".exercisepopup"
-            android:label="Update Exercise"
+            android:label="Exercise"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:windowSoftInputMode="stateVisible" >

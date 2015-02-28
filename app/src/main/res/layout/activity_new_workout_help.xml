@@ -18,13 +18,13 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textView"
-            android:text="Adding new exercise:" />
+            android:text="Adding exercises:" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="To add a new exercise, press the &apos;plus&apos; button. Next input the name and a description of the exercise, then click submit."
+            android:text="To add a new exercise, press the &apos;plus&apos; button. Then select the exercises you want and press &apos;add to workout&apos;"
             android:id="@+id/textView2" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="To view the description of an exercise, click on the name of the exercise, in the exercise list"
+            android:text="To view the description of an exercise, click on the name of the exercise, in the exercise list\nYou can also view the description of an exercise while adding, by long pressing the name of the exercise"
             android:id="@+id/textView4" />
 
         <TextView
@@ -57,14 +57,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Modifying exercises:"
+            android:text="Removing exercises:"
             android:id="@+id/textView5" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="To update the name or description of an exercise, or delete, long press the name of the exercise in the exercise list"
+            android:text="To remove an exercise from the workout, long press the name of the exercise"
             android:id="@+id/textView6" />
 
         <TextView
@@ -77,14 +77,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Searching:"
+            android:text="Naming your workout:"
             android:id="@+id/textView7" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="When searching for an exercise, it will only look for names of exercises that match.\nfor example: searching for an exercise named &apos;Bench press&apos; searching &apos;bench&apos; or even &apos;ben&apos; will find the exercise"
+            android:text="When naming a workout, it must be unique, if it is not, it will ask you to rename the workout after trying to submit\nplease note, leading or trailing spaces will be removed from the workout name"
             android:id="@+id/textView8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Submitting:"
+            android:id="@+id/textView13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="When your happy with your new workout press the check mark button\nyour workout is now available to use and edit"
+            android:id="@+id/textView14" />
     </LinearLayout>
 </ScrollView>
