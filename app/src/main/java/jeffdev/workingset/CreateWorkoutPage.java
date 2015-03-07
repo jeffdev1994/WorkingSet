@@ -110,13 +110,9 @@ public class CreateWorkoutPage extends ActionBarActivity {
                     intent.putExtras(bundleObject);
                     toast.show();
                     startActivity(intent);
-//                    DatabaseHandler db = new DatabaseHandler(context);
-//                    db.resettables();
                     return true;
                 }
             });
-
-
         }
         else{
             selected = new ArrayList<exerciseStorage>();

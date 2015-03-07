@@ -1,7 +1,9 @@
 package jeffdev.workingset;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -41,10 +45,16 @@ public class StartWorkout extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        String workoutname = bundle.getString("name");
+        ArrayList<exerciseStorage> exercises = (ArrayList<exerciseStorage>) bundle.getSerializable("exercises");
+        //int numExercises = exercises.size();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),exercises);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -52,6 +62,102 @@ public class StartWorkout extends ActionBarActivity {
 
     }
 
+//    public void repsup(View view){
+//        EditText editText = (EditText) findViewById(R.id.reps);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer upone = Integer.parseInt(editText.getText().toString());
+//            if (upone >= 0) {
+//                upone += 1;
+//                editText.setText(upone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//    }
+//
+//    public void repsdown(View view){
+//        EditText editText = (EditText) findViewById(R.id.reps);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer downone = Integer.parseInt(editText.getText().toString());
+//            if (downone >= 1) {
+//                downone -= 1;
+//                editText.setText(downone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//    }
+//
+//    public void weightup(View view){
+//        EditText editText = (EditText) findViewById(R.id.weight);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer upone = Integer.parseInt(editText.getText().toString());
+//            if (upone >= 0) {
+//                upone += 1;
+//                editText.setText(upone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//    }
+//
+//    public void weightdown(View view){
+//        EditText editText = (EditText) findViewById(R.id.weight);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer downone = Integer.parseInt(editText.getText().toString());
+//            if (downone >= 1) {
+//                downone -= 1;
+//                editText.setText(downone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//    }
+//
+//    public void weightdoubleup(View view){
+//        EditText editText = (EditText) findViewById(R.id.weight);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer upone = Integer.parseInt(editText.getText().toString());
+//            if (upone >= 0) {
+//                upone += 10;
+//                editText.setText(upone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//    }
+//
+//    public void weightdoubledown(View view){
+//        EditText editText = (EditText) findViewById(R.id.weight);
+//        if(!editText.getText().toString().equals("")) {
+//            Integer downone = Integer.parseInt(editText.getText().toString());
+//            if (downone >= 11) {
+//                downone -= 10;
+//                editText.setText(downone.toString());
+//            } else {
+//                editText.setText("0");
+//            }
+//        }
+//        else{
+//            editText.setText("0");
+//        }
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,8 +188,11 @@ public class StartWorkout extends ActionBarActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        ArrayList<exerciseStorage> exercises;
+
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<exerciseStorage> exercises) {
             super(fm);
+            this.exercises = exercises;
         }
 
         @Override
@@ -96,21 +205,13 @@ public class StartWorkout extends ActionBarActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return exercises.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
+            //Locale l = Locale.getDefault();
+            return exercises.get(position).name;
         }
     }
 
@@ -142,9 +243,30 @@ public class StartWorkout extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
+            //need to do this for the remaining 5 other buttons
+            ImageButton repsup = (ImageButton) rootView.findViewById(R.id.repsup);
+            repsup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.reps);
+                    if(!editText.getText().toString().equals("")) {
+                        Integer upone = Integer.parseInt(editText.getText().toString());
+                        if (upone >= 0) {
+                            upone += 1;
+                            editText.setText(upone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                        }
+                        else{
+                            editText.setText("0");
+                        }
+                }
+            });
             return rootView;
         }
+
     }
 
 }

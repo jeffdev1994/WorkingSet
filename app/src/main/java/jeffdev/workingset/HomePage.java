@@ -32,7 +32,7 @@ public class HomePage extends ActionBarActivity {
     }
 
     public void gotostartworkout(View view){
-        Intent intent = new Intent(this,StartWorkout.class);
+        Intent intent = new Intent(this,StartWorkout_choose.class);
         startActivity(intent);
     }
 

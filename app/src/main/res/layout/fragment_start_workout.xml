@@ -23,27 +23,29 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText5"
+                android:id="@+id/reps"
                 android:layout_marginRight="40dp"
                 android:hint="reps"
                 android:layout_marginLeft="15dp"
-                android:textSize="35dp" />
+                android:textSize="35dp"
+                android:text="0"/>
 
             <EditText
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText6"
+                android:id="@+id/weight"
                 android:layout_marginRight="30dp"
                 android:hint="weight"
-                android:textSize="35dp" />
+                android:textSize="35dp"
+                android:text="0"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/circlecheckworkout"
-                android:id="@+id/button4"
+                android:id="@+id/addset"
                 android:background="#ffeeeeee"
                 android:onClick="button" />
 
@@ -57,22 +59,22 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/upbutton"
+                android:id="@+id/repsup"
                 android:src="@drawable/upicon"
                 android:layout_marginLeft="30dp"
-                android:background="#ffeeeeee" />
+                android:background="#ffeeeeee"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/upbutton2"
+                android:id="@+id/weightup"
                 android:src="@drawable/upicon"
                 android:layout_marginLeft="60dp"
                 android:background="#ffeeeeee" />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/upbutton3"
+                android:id="@+id/weightdoubleup"
                 android:src="@drawable/doubleupicon"
                 android:layout_marginLeft="10dp"
                 android:background="#ffeeeeee"
@@ -87,7 +89,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/downbutton"
+                android:id="@+id/repsdown"
                 android:src="@drawable/downicon"
                 android:layout_marginLeft="30dp"
                 android:background="#ffeeeeee" />
@@ -95,14 +97,14 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/downbutton2"
+                android:id="@+id/weightdown"
                 android:src="@drawable/downicon"
                 android:layout_marginLeft="60dp"
                 android:background="#ffeeeeee" />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
-                android:id="@+id/downbutton3"
+                android:id="@+id/weightdoubledown"
                 android:src="@drawable/doubledownicon"
                 android:layout_marginLeft="10dp"
                 android:background="#ffeeeeee" />
