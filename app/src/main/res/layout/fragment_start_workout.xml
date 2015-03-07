@@ -1,0 +1,137 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="jeffdev.learningandriod.tabbed2$PlaceholderFragment">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+
+
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editText5"
+                android:layout_marginRight="40dp"
+                android:hint="reps"
+                android:layout_marginLeft="15dp"
+                android:textSize="35dp" />
+
+            <EditText
+                android:layout_width="127dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editText6"
+                android:layout_marginRight="30dp"
+                android:hint="weight"
+                android:textSize="35dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/circlecheckworkout"
+                android:id="@+id/button4"
+                android:background="#ffeeeeee"
+                android:onClick="button" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/upbutton"
+                android:src="@drawable/upicon"
+                android:layout_marginLeft="30dp"
+                android:background="#ffeeeeee" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/upbutton2"
+                android:src="@drawable/upicon"
+                android:layout_marginLeft="60dp"
+                android:background="#ffeeeeee" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/upbutton3"
+                android:src="@drawable/doubleupicon"
+                android:layout_marginLeft="10dp"
+                android:background="#ffeeeeee"
+                android:adjustViewBounds="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/downbutton"
+                android:src="@drawable/downicon"
+                android:layout_marginLeft="30dp"
+                android:background="#ffeeeeee" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/downbutton2"
+                android:src="@drawable/downicon"
+                android:layout_marginLeft="60dp"
+                android:background="#ffeeeeee" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="53dp"
+                android:id="@+id/downbutton3"
+                android:src="@drawable/doubledownicon"
+                android:layout_marginLeft="10dp"
+                android:background="#ffeeeeee" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="notes" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/workoutexerciselist"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp">
+        </ListView>
+
+
+
+
+    </LinearLayout>
+</ScrollView>
