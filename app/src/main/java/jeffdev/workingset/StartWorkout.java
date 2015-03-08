@@ -12,7 +12,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,19 @@ public class StartWorkout extends ActionBarActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    DatabaseHandler db;
+
+    //takes over the backkey
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //this.db.close();
+            Intent intent = new Intent(this,StartWorkout_choose.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +65,13 @@ public class StartWorkout extends ActionBarActivity {
         Bundle bundle = intent.getExtras();
 
         String workoutname = bundle.getString("name");
-        ArrayList<exerciseStorage> exercises = (ArrayList<exerciseStorage>) bundle.getSerializable("exercises");
+        //ArrayList<exerciseStorage> exercises = (ArrayList<exerciseStorage>) bundle.getSerializable("exercises");
+        ArrayList<makeupStorage> exercises = (ArrayList<makeupStorage>) bundle.getSerializable("exercises");
         //int numExercises = exercises.size();
+
+//        db = new DatabaseHandler(this);
+//        db.startTransaction();
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -63,42 +83,6 @@ public class StartWorkout extends ActionBarActivity {
 
     }
 
-//    public void repsup(View view){
-//        EditText editText = (EditText) findViewById(R.id.reps);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer upone = Integer.parseInt(editText.getText().toString());
-//            if (upone >= 0) {
-//                upone += 1;
-//                editText.setText(upone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
-//    }
-//
-//    public void repsdown(View view){
-
-//    }
-//
-//    public void weightup(View view){
-
-//    }
-//
-//    public void weightdown(View view){
-
-//    }
-//
-//    public void weightdoubleup(View view){
-
-//    }
-//
-//    public void weightdoubledown(View view){
-
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,9 +113,9 @@ public class StartWorkout extends ActionBarActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        ArrayList<exerciseStorage> exercises;
+        ArrayList<makeupStorage> exercises;
 
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<exerciseStorage> exercises) {
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<makeupStorage> exercises) {
             super(fm);
             this.exercises = exercises;
         }
@@ -140,7 +124,7 @@ public class StartWorkout extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position + 1,exercises.get(position));
         }
 
         @Override
@@ -152,7 +136,7 @@ public class StartWorkout extends ActionBarActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             //Locale l = Locale.getDefault();
-            return exercises.get(position).name;
+            return exercises.get(position).Ename;
         }
     }
 
@@ -165,20 +149,28 @@ public class StartWorkout extends ActionBarActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        int currentset = 1;
+        //makeupStorage makeup;
+        String Ename;
+        String Wname;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static PlaceholderFragment newInstance(int sectionNumber,makeupStorage EandWnames) {
+            //new instance is being called twice, before oncreate getscalled, so it ends up getting the second value instead of the first..
+            //makeup = EandWnames;
+            PlaceholderFragment fragment = new PlaceholderFragment(EandWnames.Ename,EandWnames.Wname);
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public PlaceholderFragment(String Ename, String Wname) {
+            this.Ename = Ename;
+            this.Wname = Wname;
         }
 
         @Override
@@ -327,8 +319,9 @@ public class StartWorkout extends ActionBarActivity {
 
                     //gonna need to find a way to count how many sets have been before this, to have set 1 2 ect, might be able to when i have the transaction going
                     TextView setnum = new TextView(rootView.getContext());
-                    setnum.setText("set X");
+                    setnum.setText("set " + currentset);
                     setnum.setTextSize(25);
+                    currentset++;
 
                     doneset.addView(setnum);
 

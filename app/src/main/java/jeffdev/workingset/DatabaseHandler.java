@@ -25,8 +25,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_EXERCISE_TABLE = "CREATE TABLE exercise(name TEXT primary key,description TEXT)";
         String CREATE_MAKE_UP_TABLE = "CREATE TABLE makeup(Ename TEXT,Wname TEXT)";
         String CREATE_WORKOUT_TABLE = "CREATE TABLE workout(Name TEXT UNIQUE)";
-        String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,reps INTEGER, weight REAL)";
-        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout1(name TEXT,date TEXT, length TEXT, PRIMARY KEY(name,date))";
+        String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,reps INTEGER, weight INTEGER)";
+        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout1(name TEXT,date TEXT, PRIMARY KEY(name,date))";
 
         db.execSQL(CREATE_EXERCISE_TABLE);
         db.execSQL(CREATE_MAKE_UP_TABLE);
@@ -61,6 +61,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.d("workout", cursor.getString(0));
             cursor.moveToNext();
         }
+    }
+
+
+    public void addset(String Ename, String Wname, String date, int reps, int weight){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Ename", Ename);
+        values.put("Wname", Wname);
+        values.put("date", date);
+        values.put("reps", reps);
+        values.put("weight", weight);
+        db.insert("doesset",null,values);
+        return;
     }
 
     //return 0 if successful, 1 if its already there
