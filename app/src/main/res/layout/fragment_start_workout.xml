@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="jeffdev.learningandriod.tabbed2$PlaceholderFragment">
+        tools:context="jeffdev.learningandriod.tabbed2$PlaceholderFragment"
+        android:id="@+id/main_layout">
 
 
         <LinearLayout
@@ -46,8 +47,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/circlecheckworkout"
                 android:id="@+id/addset"
-                android:background="#ffeeeeee"
-                android:onClick="button" />
+                android:background="#ffeeeeee" />
 
         </LinearLayout>
 
@@ -114,7 +114,8 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp">
+            android:layout_marginTop="70dp"
+            android:id="@+id/notes_section">
 
 
             <EditText
@@ -123,16 +124,9 @@
                 android:id="@+id/editText7"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:hint="notes" />
+                android:hint="notes"
+                android:layout_marginBottom="30dp" />
         </LinearLayout>
-        <ListView
-            android:id="@+id/workoutexerciselist"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="15dp">
-        </ListView>
-
-
 
 
     </LinearLayout>

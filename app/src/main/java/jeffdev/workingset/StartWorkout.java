@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -79,83 +80,23 @@ public class StartWorkout extends ActionBarActivity {
 //    }
 //
 //    public void repsdown(View view){
-//        EditText editText = (EditText) findViewById(R.id.reps);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer downone = Integer.parseInt(editText.getText().toString());
-//            if (downone >= 1) {
-//                downone -= 1;
-//                editText.setText(downone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
+
 //    }
 //
 //    public void weightup(View view){
-//        EditText editText = (EditText) findViewById(R.id.weight);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer upone = Integer.parseInt(editText.getText().toString());
-//            if (upone >= 0) {
-//                upone += 1;
-//                editText.setText(upone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
+
 //    }
 //
 //    public void weightdown(View view){
-//        EditText editText = (EditText) findViewById(R.id.weight);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer downone = Integer.parseInt(editText.getText().toString());
-//            if (downone >= 1) {
-//                downone -= 1;
-//                editText.setText(downone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
+
 //    }
 //
 //    public void weightdoubleup(View view){
-//        EditText editText = (EditText) findViewById(R.id.weight);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer upone = Integer.parseInt(editText.getText().toString());
-//            if (upone >= 0) {
-//                upone += 10;
-//                editText.setText(upone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
+
 //    }
 //
 //    public void weightdoubledown(View view){
-//        EditText editText = (EditText) findViewById(R.id.weight);
-//        if(!editText.getText().toString().equals("")) {
-//            Integer downone = Integer.parseInt(editText.getText().toString());
-//            if (downone >= 11) {
-//                downone -= 10;
-//                editText.setText(downone.toString());
-//            } else {
-//                editText.setText("0");
-//            }
-//        }
-//        else{
-//            editText.setText("0");
-//        }
+
 //
 //    }
 
@@ -241,10 +182,11 @@ public class StartWorkout extends ActionBarActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
-            //need to do this for the remaining 5 other buttons
+
+            //start the listeners
+
             ImageButton repsup = (ImageButton) rootView.findViewById(R.id.repsup);
             repsup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -264,6 +206,154 @@ public class StartWorkout extends ActionBarActivity {
                         }
                 }
             });
+
+
+            ImageButton repsdown = (ImageButton) rootView.findViewById(R.id.repsdown);
+            repsdown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.reps);
+                    if(!editText.getText().toString().equals("")) {
+                        Integer downone = Integer.parseInt(editText.getText().toString());
+                        if (downone >= 1) {
+                            downone -= 1;
+                            editText.setText(downone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                    }
+                    else{
+                        editText.setText("0");
+                    }
+                }
+            });
+
+            ImageButton weightup = (ImageButton) rootView.findViewById(R.id.weightup);
+            weightup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.weight);
+                    if (!editText.getText().toString().equals("")) {
+                        Integer upone = Integer.parseInt(editText.getText().toString());
+                        if (upone >= 0) {
+                            upone += 1;
+                            editText.setText(upone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                    } else {
+                        editText.setText("0");
+                    }
+                }
+            });
+
+
+            ImageButton weightdown = (ImageButton) rootView.findViewById(R.id.weightdown);
+            weightdown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.weight);
+                    if(!editText.getText().toString().equals("")) {
+                        Integer downone = Integer.parseInt(editText.getText().toString());
+                        if (downone >= 1) {
+                            downone -= 1;
+                            editText.setText(downone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                    }
+                    else{
+                        editText.setText("0");
+                    }
+                }
+            });
+
+
+            ImageButton weightdoubleup = (ImageButton) rootView.findViewById(R.id.weightdoubleup);
+            weightdoubleup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.weight);
+                    if(!editText.getText().toString().equals("")) {
+                        Integer upone = Integer.parseInt(editText.getText().toString());
+                        if (upone >= 0) {
+                            upone += 10;
+                            editText.setText(upone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                    }
+                    else{
+                        editText.setText("0");
+                    }
+                }
+            });
+
+            ImageButton weightdoubledown = (ImageButton) rootView.findViewById(R.id.weightdoubledown);
+            weightdoubledown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) rootView.findViewById(R.id.weight);
+                    if(!editText.getText().toString().equals("")) {
+                        Integer downone = Integer.parseInt(editText.getText().toString());
+                        if (downone >= 11) {
+                            downone -= 10;
+                            editText.setText(downone.toString());
+                        } else {
+                            editText.setText("0");
+                        }
+                    }
+                    else{
+                        editText.setText("0");
+                    }
+                }
+            });
+
+            ImageButton addset = (ImageButton) rootView.findViewById(R.id.addset);
+            addset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText weight = (EditText) rootView.findViewById(R.id.weight);
+                    EditText reps = (EditText) rootView.findViewById(R.id.reps);
+
+
+                    //need to start a transaction, and also add in some sort of line that says the reps and sets.
+                    LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.main_layout);
+
+                    LinearLayout doneset = new LinearLayout(rootView.getContext());
+                    doneset.setOrientation(LinearLayout.HORIZONTAL);
+                    doneset.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                    doneset.setPadding(0,0,0,15);
+
+                    //gonna need to find a way to count how many sets have been before this, to have set 1 2 ect, might be able to when i have the transaction going
+                    TextView setnum = new TextView(rootView.getContext());
+                    setnum.setText("set X");
+                    setnum.setTextSize(25);
+
+                    doneset.addView(setnum);
+
+                    TextView setreps = new TextView(rootView.getContext());
+                    setreps.setText(reps.getText().toString() + " x ");
+                    setreps.setTextSize(25);
+                    setreps.setPadding(200,0,0,0);
+
+                    doneset.addView(setreps);
+
+                    TextView setweight = new TextView(rootView.getContext());
+                    setweight.setText(weight.getText().toString());
+                    setweight.setTextSize(25);
+
+                    doneset.addView(setweight);
+
+
+                    mainlayout.addView(doneset);
+
+                }
+            });
+
+
+            //end the listeners
+
             return rootView;
         }
 
