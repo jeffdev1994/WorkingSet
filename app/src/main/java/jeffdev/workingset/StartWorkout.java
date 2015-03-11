@@ -1,25 +1,24 @@
 package jeffdev.workingset;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Date;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -42,13 +41,12 @@ public class StartWorkout extends ActionBarActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    DatabaseHandler db;
+
 
     //takes over the backkey
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //this.db.close();
             Intent intent = new Intent(this,StartWorkout_choose.class);
             startActivity(intent);
             return true;
@@ -61,16 +59,14 @@ public class StartWorkout extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout);
 
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        String workoutname = bundle.getString("name");
-        //ArrayList<exerciseStorage> exercises = (ArrayList<exerciseStorage>) bundle.getSerializable("exercises");
+        //String workoutname = bundle.getString("name");
         ArrayList<makeupStorage> exercises = (ArrayList<makeupStorage>) bundle.getSerializable("exercises");
         //int numExercises = exercises.size();
 
-//        db = new DatabaseHandler(this);
-//        db.startTransaction();
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -115,6 +111,7 @@ public class StartWorkout extends ActionBarActivity {
 
         ArrayList<makeupStorage> exercises;
 
+
         public SectionsPagerAdapter(FragmentManager fm, ArrayList<makeupStorage> exercises) {
             super(fm);
             this.exercises = exercises;
@@ -122,6 +119,11 @@ public class StartWorkout extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
+            //this will be where i put the finished workout tab.
+            if((position ) == exercises.size()){
+                //return finishfragment.newInstance();
+                return finishFragment.newInstance(position + 1);
+            }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1,exercises.get(position));
@@ -130,11 +132,14 @@ public class StartWorkout extends ActionBarActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return exercises.size();
+            return exercises.size()+1;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+            if((position ) == exercises.size()){
+                return "Finished";
+            }
             //Locale l = Locale.getDefault();
             return exercises.get(position).Ename;
         }
@@ -153,22 +158,25 @@ public class StartWorkout extends ActionBarActivity {
         //makeupStorage makeup;
         String Ename;
         String Wname;
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber,makeupStorage EandWnames) {
-            //new instance is being called twice, before oncreate getscalled, so it ends up getting the second value instead of the first..
-            //makeup = EandWnames;
-            PlaceholderFragment fragment = new PlaceholderFragment(EandWnames.Ename,EandWnames.Wname);
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            fragment.setinfo(EandWnames.Ename,EandWnames.Wname);
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment(String Ename, String Wname) {
+        public PlaceholderFragment() {
+        }
+
+        public void setinfo(String Ename, String Wname) {
             this.Ename = Ename;
             this.Wname = Wname;
         }
@@ -305,11 +313,23 @@ public class StartWorkout extends ActionBarActivity {
             addset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Log.d("exercise",Ename);
                     EditText weight = (EditText) rootView.findViewById(R.id.weight);
                     EditText reps = (EditText) rootView.findViewById(R.id.reps);
 
+                    //add the set to the array in onCreate
+                    doesSetStorage theSet = new doesSetStorage();
+                    theSet.Ename = Ename;
+                    theSet.Wname = Wname;
+                    theSet.reps = Integer.parseInt(reps.getText().toString());
+                    theSet.weight = Integer.parseInt(weight.getText().toString());
+                    theSet.date = date;
+                    allSetsStorage.addset(theSet);
 
-                    //need to start a transaction, and also add in some sort of line that says the reps and sets.
+
+
+
+                    //set up the new linearlayout that tells them about their set
                     LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.main_layout);
 
                     LinearLayout doneset = new LinearLayout(rootView.getContext());
@@ -317,7 +337,6 @@ public class StartWorkout extends ActionBarActivity {
                     doneset.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                     doneset.setPadding(0,0,0,15);
 
-                    //gonna need to find a way to count how many sets have been before this, to have set 1 2 ect, might be able to when i have the transaction going
                     TextView setnum = new TextView(rootView.getContext());
                     setnum.setText("set " + currentset);
                     setnum.setTextSize(25);
@@ -347,6 +366,53 @@ public class StartWorkout extends ActionBarActivity {
 
             //end the listeners
 
+            return rootView;
+        }
+
+    }
+
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class finishFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static finishFragment newInstance(int sectionNumber) {
+            finishFragment fragment = new finishFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public finishFragment() {
+        }
+
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_finish_workout, container, false);
+
+            //start the listeners
+
+            Button submit = (Button) rootView.findViewById(R.id.submitButton);
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<doesSetStorage> totalworkout = allSetsStorage.getlist();
+                    //i have all the exercises that were made, just need to add them to the db
+
+                }
+            });
             return rootView;
         }
 
