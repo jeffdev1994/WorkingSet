@@ -20,5 +20,9 @@ public final class allSetsStorage {
         return totalworkout;
     }
 
+    public static void deleteall(){
+        totalworkout.clear();
+    }
+
 
 }

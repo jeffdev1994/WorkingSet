@@ -25,8 +25,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_EXERCISE_TABLE = "CREATE TABLE exercise(name TEXT primary key,description TEXT)";
         String CREATE_MAKE_UP_TABLE = "CREATE TABLE makeup(Ename TEXT,Wname TEXT)";
         String CREATE_WORKOUT_TABLE = "CREATE TABLE workout(Name TEXT UNIQUE)";
-        String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,reps INTEGER, weight INTEGER)";
-        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout1(name TEXT,date TEXT, PRIMARY KEY(name,date))";
+        String CREATE_SET_TABLE = "CREATE TABLE doesset(Ename TEXT,Wname TEXT,date TEXT,notes TEXT,reps INTEGER, weight INTEGER)";
+        String CREATE_COMPLETED_WORKOUT_TABLE = "CREATE TABLE completedworkout(name TEXT,date TEXT, PRIMARY KEY(name,date))";
 
         db.execSQL(CREATE_EXERCISE_TABLE);
         db.execSQL(CREATE_MAKE_UP_TABLE);
@@ -44,7 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS makeup");
         db.execSQL("DROP TABLE IF EXISTS workout");
         db.execSQL("DROP TABLE IF EXISTS doesset");
-        db.execSQL("DROP TABLE IF EXISTS completedworkout1");
+        db.execSQL("DROP TABLE IF EXISTS completedworkout");
 
         // Create tables again
         onCreate(db);
@@ -64,16 +64,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public void addset(String Ename, String Wname, String date, int reps, int weight){
+    //if it returns 1, then the workout already happened that day, reps and sets will be added to the previous workout
+    public int addCompletedWorkout(String name, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Ename", Ename);
-        values.put("Wname", Wname);
+        values.put("name", name);
         values.put("date", date);
-        values.put("reps", reps);
-        values.put("weight", weight);
-        db.insert("doesset",null,values);
-        return;
+        try {
+            db.insertOrThrow("completedworkout", null, values);
+        }catch(android.database.sqlite.SQLiteConstraintException e){
+            //they already have this workout and day, instead just dont add the workout, and it will be treated like it was
+            //added to the previous workout that day
+            db.close();
+            return 1;
+        }
+        db.close();
+        return 0;
+    }
+
+    public int addset(doesSetStorage set){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Ename", set.Ename);
+        values.put("Wname", set.Wname);
+        values.put("date", set.date);
+        values.put("notes",set.notes);
+        values.put("reps", set.reps);
+        values.put("weight", set.weight);
+        try {
+            db.insertOrThrow("doesset", null, values);
+        }catch(android.database.sqlite.SQLiteConstraintException e){
+            db.close();
+            return 1;
+        }
+        db.close();
+        return 0;
     }
 
     //return 0 if successful, 1 if its already there
@@ -146,6 +171,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
 
     }
+
+    public void deletelog(workoutStorage workout){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Delete from completedworkout where name = '" + workout.name + "' and date = '" + workout.date + "'";
+        Cursor cursor = db.rawQuery(query,null);
+        cursor.moveToFirst();
+
+        query = "Delete from doesset where Wname = '" + workout.name + "' and date = '" + workout.date + "'";
+        Cursor cursor2 = db.rawQuery(query,null);
+        do{
+            cursor2.moveToFirst();
+        }while(cursor2.moveToNext());
+
+        db.close();
+        return;
+
+    }
+
     //return 0 if successful, 1 if its already there
     public int updateExercise(String oldname, String newname, String description){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -174,6 +217,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         exercise.setDescription(cursor.getString(1));
         db.close();
         return exercise;
+    }
+
+    public List<doesSetStorage> getsets(workoutStorage workout){
+        List<doesSetStorage> setlist = new ArrayList<doesSetStorage>();
+        String query = "select * from doesset where name = '" + workout.name + "' and date = '" + workout.date + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()) {
+            do {
+                doesSetStorage set = new doesSetStorage();
+                set.Ename = cursor.getString(0);
+                set.Wname = cursor.getString(1);
+                set.date = cursor.getString(2);
+                set.notes = cursor.getString(3);
+                set.reps = cursor.getInt(4);
+                set.weight = cursor.getInt(5);
+                setlist.add(set);
+            } while (cursor.moveToNext());
+        }
+        return setlist;
+    }
+
+    public ArrayList<workoutStorage> getalllogs(){
+        ArrayList<workoutStorage> workoutlist = new ArrayList<workoutStorage>();
+        String query = "Select * from completedworkout";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToLast()){
+            do{
+                workoutStorage workout = new workoutStorage(cursor.getString(0),cursor.getString(1));
+                workoutlist.add(workout);
+            }while(cursor.moveToPrevious());
+        }
+        db.close();
+        return workoutlist;
+
     }
 
     public List<makeupStorage> getMakeup(String name){
@@ -249,11 +328,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return exerciselist;
     }
 
-    public void startTransaction(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-    }
-
     //for testing purposes, deletes the tables
     public void resettables() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -262,6 +336,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS makeup");
         db.execSQL("DROP TABLE IF EXISTS doesset");
         db.execSQL("DROP TABLE IF EXISTS workout");
+        db.execSQL("DROP TABLE IF EXISTS completedworkout");
+
 
         onCreate(db);
     }

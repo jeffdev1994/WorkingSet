@@ -45,19 +45,20 @@
         <Button
             android:id="@+id/past_workout_button"
 
-            android:text="Past Workout"
+            android:text="Logs"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
 
             android:layout_width="260dp"
             android:layout_height="60dp"
             android:background="@drawable/homepagebuttons"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="gotologs"/>
 
         <Button
             android:id="@+id/edit_workout_button"
 
-            android:text="Edit Workout"
+            android:text="Edit Workouts"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
 

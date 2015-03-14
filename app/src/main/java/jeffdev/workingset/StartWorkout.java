@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class StartWorkout extends ActionBarActivity {
@@ -202,7 +204,7 @@ public class StartWorkout extends ActionBarActivity {
                         }
                         }
                         else{
-                            editText.setText("0");
+                            editText.setText("1");
                         }
                 }
             });
@@ -242,7 +244,7 @@ public class StartWorkout extends ActionBarActivity {
                             editText.setText("0");
                         }
                     } else {
-                        editText.setText("0");
+                        editText.setText("1");
                     }
                 }
             });
@@ -284,7 +286,7 @@ public class StartWorkout extends ActionBarActivity {
                         }
                     }
                     else{
-                        editText.setText("0");
+                        editText.setText("10");
                     }
                 }
             });
@@ -313,19 +315,45 @@ public class StartWorkout extends ActionBarActivity {
             addset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TODO: need to get rid of the focus from the edit texts after pressing add, or just put down the keyboard
                     //Log.d("exercise",Ename);
                     EditText weight = (EditText) rootView.findViewById(R.id.weight);
                     EditText reps = (EditText) rootView.findViewById(R.id.reps);
+                    EditText notes = (EditText) rootView.findViewById(R.id.notes);
+
+                    if(weight.getText().toString().equals("")){
+                        Toast toast = Toast.makeText(rootView.getContext(),"please enter a value for weight", Toast.LENGTH_SHORT);
+                        LinearLayout toastLayout = (LinearLayout) toast.getView();
+                        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                        toastTV.setTextSize(20);
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+                        toast.show();
+                        return;
+                    }
+
+                    if(reps.getText().toString().equals("")){
+                        Toast toast = Toast.makeText(rootView.getContext(),"please enter a value for reps", Toast.LENGTH_SHORT);
+                        LinearLayout toastLayout = (LinearLayout) toast.getView();
+                        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                        toastTV.setTextSize(20);
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+                        toast.show();
+                        return;
+                    }
 
                     //add the set to the array in onCreate
                     doesSetStorage theSet = new doesSetStorage();
                     theSet.Ename = Ename;
                     theSet.Wname = Wname;
+                    theSet.notes = notes.getText().toString();
                     theSet.reps = Integer.parseInt(reps.getText().toString());
                     theSet.weight = Integer.parseInt(weight.getText().toString());
                     theSet.date = date;
                     allSetsStorage.addset(theSet);
 
+
+                    //set notes back to empty, cuz it wil be on a per set basis, instead of per workout
+                    notes.setText("");
 
 
 
@@ -375,6 +403,8 @@ public class StartWorkout extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    //TODO: incorporate this into the other fragment, because when i go to this tab, it loses the memory of the other ones.
+    //most importantly the sets
     public static class finishFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -400,7 +430,7 @@ public class StartWorkout extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_finish_workout, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_finish_workout, container, false);
 
             //start the listeners
 
@@ -408,8 +438,33 @@ public class StartWorkout extends ActionBarActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    DatabaseHandler db = new DatabaseHandler(rootView.getContext());
                     ArrayList<doesSetStorage> totalworkout = allSetsStorage.getlist();
-                    //i have all the exercises that were made, just need to add them to the db
+
+                    if(totalworkout.size() != 0) {
+                        for (int i = 0; i < totalworkout.size(); i++) {
+                            db.addset(totalworkout.get(i));
+                        }
+                        int newWorkout = db.addCompletedWorkout(totalworkout.get(0).Wname,totalworkout.get(0).date);
+                        if(newWorkout == 1){
+                            Toast.makeText(rootView.getContext(),"you already did this workout today!\nthese exercises will be combined with earlier workout",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(rootView.getContext(),"Workout successfully completed",Toast.LENGTH_LONG).show();
+                        }
+                        allSetsStorage.deleteall();
+                        Intent intent = new Intent(rootView.getContext(),HomePage.class);
+                        startActivity(intent);
+
+
+                    }else{
+                        Toast toast = Toast.makeText(rootView.getContext(),"you didnt do any sets! Try harder", Toast.LENGTH_SHORT);
+                        LinearLayout toastLayout = (LinearLayout) toast.getView();
+                        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                        toastTV.setTextSize(20);
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+                        toast.show();
+                    }
 
                 }
             });
