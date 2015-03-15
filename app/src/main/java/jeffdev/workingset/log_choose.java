@@ -46,7 +46,7 @@ public class log_choose extends ActionBarActivity {
         allvalues = db.getalllogs();
         List<String> allvaluesflat = new ArrayList<String>();
         for(int i = 0; i<allvalues.size();i++){
-            allvaluesflat.add(allvalues.get(i).name + ": " + allvalues.get(i).date);
+            allvaluesflat.add(allvalues.get(i).name + "\t\t\t" + allvalues.get(i).date);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_selectable_list_item, android.R.id.text1, allvaluesflat);
@@ -58,16 +58,16 @@ public class log_choose extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 workoutStorage workout = allvalues.get(position);
-                //Intent intent = new Intent(context,log.class);
+                Intent intent = new Intent(context,logs.class);
 
                 //Log.d("name", workout.name);
 
                 Bundle bundleObject = new Bundle();
                 bundleObject.putSerializable("workout",workout);
 
-                //intent.putExtras(bundleObject);
+                intent.putExtras(bundleObject);
 
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
 

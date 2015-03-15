@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
-        super(context, "Workingset DB", null, 1);
+        super(context, "WorkingsetDB", null, 1);
     }
 
     // Creating Tables
@@ -221,7 +221,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<doesSetStorage> getsets(workoutStorage workout){
         List<doesSetStorage> setlist = new ArrayList<doesSetStorage>();
-        String query = "select * from doesset where name = '" + workout.name + "' and date = '" + workout.date + "'";
+        String query = "select * from doesset where Wname = '" + workout.name + "' and date = '" + workout.date + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query,null);
         if(cursor.moveToFirst()) {

@@ -109,6 +109,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
         </activity>
+        <activity
+            android:name=".logs"
+            android:label="@string/title_activity_logs"
+            android:parentActivityName=".log_choose" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jeffdev.workingset.log_choose" />
+        </activity>
     </application>
 
 </manifest>
