@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -14,9 +15,21 @@ import java.util.List;
 
 public class logs extends ActionBarActivity {
 
-    //need to decide if i want the view to come up in the order they did sets, or all the same sets together and so on
+    //takes over the backkey
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this, log_choose.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+        //need to decide if i want the view to come up in the order they did sets, or all the same sets together and so on
     //maybe provide an option for either set?
     //do the in order of added first
+    //TODO: add in a button or menu item to switch between different types of view
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
