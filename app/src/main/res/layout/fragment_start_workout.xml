@@ -125,6 +125,12 @@
                 android:hint="notes"
                 android:layout_marginBottom="30dp" />
         </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sets_section">
+        </LinearLayout>
 
 
     </LinearLayout>

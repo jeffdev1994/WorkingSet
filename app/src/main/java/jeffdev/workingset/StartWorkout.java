@@ -3,7 +3,9 @@ package jeffdev.workingset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -119,6 +122,7 @@ public class StartWorkout extends ActionBarActivity {
             this.exercises = exercises;
         }
 
+
         @Override
         public Fragment getItem(int position) {
             //this will be where i put the finished workout tab.
@@ -160,7 +164,9 @@ public class StartWorkout extends ActionBarActivity {
         //makeupStorage makeup;
         String Ename;
         String Wname;
+        List<String> donesets = new ArrayList<String>();
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        View rootView;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -183,12 +189,67 @@ public class StartWorkout extends ActionBarActivity {
             this.Wname = Wname;
         }
 
+//        @Override
+//        public void onPause(){
+//            super.onPause();
+//            ViewGroup mainlayout = (LinearLayout) rootView.findViewById(R.id.main_layout);
+//            if(mainlayout.getChildAt(10) != null) {
+//                mainlayout.removeViewAt(10);
+//            }
+//        }
+
+        //this is used when coming back, it solves the problem of losing my sets after going to far
+        @Override
+        public void onResume() {
+            super.onResume();
+            //removes them first, since when you turn off screen, it doesnt get rid of it automatically
+            LinearLayout stuff = (LinearLayout) rootView.findViewById(R.id.sets_section);
+            stuff.removeAllViewsInLayout();
+
+            if(currentset > 1){
+            int j = 1;
+            for(int i = 0; i < donesets.size(); i+=2) {
+                LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.sets_section);
+
+                LinearLayout doneset = new LinearLayout(rootView.getContext());
+                doneset.setOrientation(LinearLayout.HORIZONTAL);
+                doneset.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                doneset.setPadding(0, 0, 0, 15);
+
+                TextView setnum = new TextView(rootView.getContext());
+                setnum.setText("\tset " + j);
+                setnum.setTextSize(25);
+                j++;
+
+                doneset.addView(setnum);
+
+                TextView setreps = new TextView(rootView.getContext());
+                setreps.setText(donesets.get(i));
+                setreps.setTextSize(25);
+                setreps.setPadding(200, 0, 0, 0);
+
+                doneset.addView(setreps);
+
+                TextView setweight = new TextView(rootView.getContext());
+                setweight.setText(donesets.get(i + 1));
+                setweight.setTextSize(25);
+
+                doneset.addView(setweight);
+
+
+                mainlayout.addView(doneset);
+            }
+
+
+
+            }
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
+            rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
 
             //start the listeners
-
             ImageButton repsup = (ImageButton) rootView.findViewById(R.id.repsup);
             repsup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -358,7 +419,7 @@ public class StartWorkout extends ActionBarActivity {
 
 
                     //set up the new linearlayout that tells them about their set
-                    LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.main_layout);
+                    LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.sets_section);
 
                     LinearLayout doneset = new LinearLayout(rootView.getContext());
                     doneset.setOrientation(LinearLayout.HORIZONTAL);
@@ -366,7 +427,7 @@ public class StartWorkout extends ActionBarActivity {
                     doneset.setPadding(0,0,0,15);
 
                     TextView setnum = new TextView(rootView.getContext());
-                    setnum.setText("set " + currentset);
+                    setnum.setText("\tset " + currentset);
                     setnum.setTextSize(25);
                     currentset++;
 
@@ -383,6 +444,9 @@ public class StartWorkout extends ActionBarActivity {
                     setweight.setText(weight.getText().toString());
                     setweight.setTextSize(25);
 
+                    donesets.add(reps.getText().toString() + " x ");
+                    donesets.add(weight.getText().toString());
+
                     doneset.addView(setweight);
 
 
@@ -396,6 +460,9 @@ public class StartWorkout extends ActionBarActivity {
 
             return rootView;
         }
+
+
+
 
     }
 
