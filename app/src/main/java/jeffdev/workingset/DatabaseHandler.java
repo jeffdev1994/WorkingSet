@@ -207,6 +207,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return 0;
     }
 
+    public List<String> getExerciseUsed(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> workouts = new ArrayList<String>();
+        String query = "Select Wname from makeup where Ename = '" + name + "'";
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()){
+            do {
+                workouts.add(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return workouts;
+    }
+
     public exerciseStorage getSingleExercise(String name){
         exerciseStorage exercise = new exerciseStorage();
         String query = "Select * from exercise where name = '" + name +"'";
