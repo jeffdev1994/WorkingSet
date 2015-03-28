@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/popup"
+    android:weightSum="5">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Start\nWorkout"
+            android:id="@+id/start_workout_button"
+            android:onClick="gotostartworkout"
+            android:background="@drawable/startworkoutpaper3"
+            android:singleLine="false"
+            android:textSize="40dp"
+            android:textColor="#ff2148ff"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Logs"
+            android:id="@+id/past_workout_button"
+            android:onClick="gotologs"
+            android:textSize="40dp"
+            android:background="@drawable/linedpapernew"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="New Workout"
+            android:id="@+id/edit_workout_button"
+            android:onClick="gotoeditworkout"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1.5"
+            android:textSize="40dp"
+            android:background="@drawable/checkpaper2"
+            android:textStyle="bold"
+            android:textColor="#ff000000" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Edit\nWorkout"
+            android:id="@+id/create_workout_button"
+            android:onClick="gotocreateworkout"
+            android:layout_weight=".5"
+            android:textSize="25dp"
+            android:background="@drawable/editpaper2p"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Exercises"
+            android:id="@+id/main_exercises_button"
+            android:onClick="gotoexercises"
+            android:background="@drawable/dumbellpaper2"
+            android:textSize="40dp"
+            android:textColor="#ffffffff"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Statistics"
+            android:id="@+id/button10"
+            android:background="@drawable/statisticspaper"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

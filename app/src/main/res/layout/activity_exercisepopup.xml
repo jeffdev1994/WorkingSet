@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/popupexercisename"
         android:hint="Name"
-        android:textColor="#ff090909" />
+        android:textColor="#ff090909"
+        android:maxLength="40" />
 
     <EditText
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
         android:layout_marginLeft="30dp"
         android:hint="Description"
         android:textColor="#ff090909"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:maxLength="150" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

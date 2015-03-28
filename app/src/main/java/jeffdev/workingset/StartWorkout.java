@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -52,8 +55,25 @@ public class StartWorkout extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(this,StartWorkout_choose.class);
-            startActivity(intent);
+            AlertDialog.Builder ask = new AlertDialog.Builder(this);
+
+            ask.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(),StartWorkout_choose.class);
+                    startActivity(intent);
+                    return;
+                }
+            });
+            ask.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+            ask.setMessage("If you leave now, your workout will not be saved!");
+            ask.create();
+            ask.show();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -63,6 +83,7 @@ public class StartWorkout extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout);
+//        getActionBar().hide();
 
 
         Intent intent = getIntent();
@@ -382,6 +403,7 @@ public class StartWorkout extends ActionBarActivity {
                     EditText reps = (EditText) rootView.findViewById(R.id.reps);
                     EditText notes = (EditText) rootView.findViewById(R.id.notes);
 
+
                     if(weight.getText().toString().equals("")){
                         Toast toast = Toast.makeText(rootView.getContext(),"please enter a value for weight", Toast.LENGTH_SHORT);
                         LinearLayout toastLayout = (LinearLayout) toast.getView();
@@ -515,7 +537,13 @@ public class StartWorkout extends ActionBarActivity {
                         }
                         int newWorkout = db.addCompletedWorkout(totalworkout.get(0).Wname,totalworkout.get(0).date);
                         if(newWorkout == 1){
-                            Toast.makeText(rootView.getContext(),"you already did this workout today!\nthese exercises will be combined with earlier workout",Toast.LENGTH_LONG).show();
+                            Toast toast = Toast.makeText(rootView.getContext(),"you already did this workout today!\nthese exercises will be combined with earlier workout", Toast.LENGTH_LONG);
+                            LinearLayout toastLayout = (LinearLayout) toast.getView();
+                            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                            toastTV.setTextSize(20);
+                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                            toast.show();
+                            //Toast.makeText(rootView.getContext(),"you already did this workout today!\nthese exercises will be combined with earlier workout",Toast.LENGTH_LONG).show();
                         }else{
                             Toast.makeText(rootView.getContext(),"Workout successfully completed",Toast.LENGTH_LONG).show();
                         }

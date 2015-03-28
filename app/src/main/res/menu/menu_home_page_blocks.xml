@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomePage">
     <item
         android:id="@+id/action_switch_screens"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@drawable/menulines"
         android:title="switch screen type"
         app:showAsAction="ifRoom"/>
 </menu>

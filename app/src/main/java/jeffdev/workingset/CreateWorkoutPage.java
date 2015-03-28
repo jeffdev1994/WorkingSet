@@ -35,9 +35,16 @@ public class CreateWorkoutPage extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(this,HomePage.class);
-            startActivity(intent);
-            return true;
+            if(editing){
+                Intent intent = new Intent(this,edit_workout_choose.class);
+                startActivity(intent);
+                return true;
+            }
+            else {
+                Intent intent = new Intent(this, HomePage.class);
+                startActivity(intent);
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -138,6 +145,16 @@ public class CreateWorkoutPage extends ActionBarActivity {
     public void submitworkout(View view){
         EditText nameinput = (EditText) findViewById(R.id.workoutname);
         String workoutname = nameinput.getText().toString();
+
+        if(workoutname.equals("") || selected.isEmpty()){
+            Toast toast = Toast.makeText(this, "Please ensure your workout name and chosen exercises are not empty", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(20);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
+            toast.show();
+            return;
+        }
 
         //get rid of leading and trailing spaces from workoutname
         while(workoutname.startsWith(" ")){

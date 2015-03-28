@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/workoutname"
         android:hint="Name of workout"
-        android:textSize="35dp" />
+        android:textSize="35dp"
+        android:maxLength="30" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -48,5 +49,6 @@
         android:layout_width="match_parent"
         android:layout_marginTop="15dp">
     </ListView>
+
 </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +57,9 @@ public class logs extends ActionBarActivity {
             exercisename.setText(set.Ename);
             exercisename.setTextSize(25);
             exercisename.setTextColor(Color.BLACK);
+            //conversion calculation for using dp
+            int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 230, getResources().getDisplayMetrics());
+            exercisename.setMaxWidth(px);
 
             displayset.addView(exercisename);
 

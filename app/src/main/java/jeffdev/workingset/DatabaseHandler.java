@@ -201,6 +201,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             db.updateWithOnConflict("exercise", values, "name = ?", new String[]{oldname}, SQLiteDatabase.CONFLICT_FAIL);
         }catch(Exception e){
+            db.close();
+            return 1;
+        }
+        ContentValues values2 = new ContentValues();
+        values2.put("Ename",newname);
+        try {
+            db.updateWithOnConflict("makeup", values2, "Ename = ?", new String[]{oldname}, SQLiteDatabase.CONFLICT_FAIL);
+        }catch(Exception e){
+            db.close();
             return 1;
         }
         db.close();
@@ -293,14 +302,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String query = "Select * from makeup where Wname = '" + name + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query,null);
-        if(cursor.moveToLast()){
+        if(cursor.moveToFirst()){
             do{
                 makeupStorage makeup = new makeupStorage();
                 makeup.Ename = cursor.getString(0);
                 makeup.Wname = cursor.getString(1);
 
                 makeuplist.add(makeup);
-            }while(cursor.moveToPrevious());
+            }while(cursor.moveToNext());
         }
         db.close();
         return makeuplist;
