@@ -87,11 +87,11 @@
         <activity
             android:name=".StartWorkout"
             android:label="@string/title_activity_start_workout"
-            android:parentActivityName=".HomePage"
+            android:parentActivityName=".StartWorkout_choose"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="jeffdev.workingset.HomePage" />
+                android:value="jeffdev.workingset.StartWorkout_choose" />
         </activity>
         <activity
             android:name=".StartWorkout_choose"

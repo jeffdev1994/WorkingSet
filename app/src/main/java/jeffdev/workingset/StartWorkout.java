@@ -153,7 +153,9 @@ public class StartWorkout extends ActionBarActivity {
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1,exercises.get(position));
+            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+            String description = db.getSingleExercise(exercises.get(position).Ename).description;
+            return PlaceholderFragment.newInstance(position + 1,exercises.get(position),description);
         }
 
         @Override
@@ -184,6 +186,7 @@ public class StartWorkout extends ActionBarActivity {
         int currentset = 1;
         //makeupStorage makeup;
         String Ename;
+        String Edescription;
         String Wname;
         List<String> donesets = new ArrayList<String>();
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
@@ -193,9 +196,9 @@ public class StartWorkout extends ActionBarActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber,makeupStorage EandWnames) {
+        public static PlaceholderFragment newInstance(int sectionNumber,makeupStorage EandWnames, String Edescription) {
             PlaceholderFragment fragment = new PlaceholderFragment();
-            fragment.setinfo(EandWnames.Ename,EandWnames.Wname);
+            fragment.setinfo(EandWnames.Ename,EandWnames.Wname, Edescription);
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -205,9 +208,10 @@ public class StartWorkout extends ActionBarActivity {
         public PlaceholderFragment() {
         }
 
-        public void setinfo(String Ename, String Wname) {
+        public void setinfo(String Ename, String Wname, String Edescription) {
             this.Ename = Ename;
             this.Wname = Wname;
+            this.Edescription = Edescription;
         }
 
 //        @Override
@@ -269,6 +273,8 @@ public class StartWorkout extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.fragment_start_workout, container, false);
+            TextView displaydescription = (TextView) rootView.findViewById(R.id.description);
+            displaydescription.setText(Edescription);
 
             //start the listeners
             ImageButton repsup = (ImageButton) rootView.findViewById(R.id.repsup);
