@@ -1,6 +1,7 @@
 package jeffdev.workingset;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,11 +11,17 @@ import android.view.View;
 
 public class HomePage extends ActionBarActivity {
 
-    static int screentype = 0;
+    static int screentype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //will find the value, and if there isnt one, it will return 0.
+        //so default is the buttons, if changed, it should stay as blocks
+        SharedPreferences settings = getPreferences(0);
+        screentype = settings.getInt("screentypeblocks",0);
+
         if(screentype == 0) {
             setContentView(R.layout.activity_home_page);
         }
@@ -84,4 +91,16 @@ public class HomePage extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SharedPreferences settings = getPreferences(0);
+        SharedPreferences.Editor screentypesettings =  settings.edit();
+        screentypesettings.putInt("screentypeblocks", screentype);
+
+        screentypesettings.commit();
+
+    }
+
 }

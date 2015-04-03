@@ -19,7 +19,6 @@
         android:text="  Add to workout  "
         android:id="@+id/button"
         android:onClick="submitexercises"
-        android:layout_gravity="center_horizontal"
         android:textColor="#fff0f0f0" />
 
 

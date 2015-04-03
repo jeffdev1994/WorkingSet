@@ -6,13 +6,22 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/main"
         android:paddingTop="10dp">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="sort type"
+            android:id="@+id/header"
+            android:paddingBottom="15dp"
+            android:textColor="#ff0233a1" />
     </LinearLayout>
 
 </ScrollView>

@@ -242,6 +242,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return exercise;
     }
 
+    public List<doesSetStorage> getsetsordered(workoutStorage workout){
+        List<doesSetStorage> setlist = new ArrayList<doesSetStorage>();
+        String query = "select * from doesset where Wname = '" + workout.name + "' and date = '" + workout.date + "'" + " order by Ename";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.moveToFirst()) {
+            do {
+                doesSetStorage set = new doesSetStorage();
+                set.Ename = cursor.getString(0);
+                set.Wname = cursor.getString(1);
+                set.date = cursor.getString(2);
+                set.notes = cursor.getString(3);
+                set.reps = cursor.getInt(4);
+                set.weight = cursor.getInt(5);
+                setlist.add(set);
+            } while (cursor.moveToNext());
+        }
+        return setlist;
+    }
+
     public List<doesSetStorage> getsets(workoutStorage workout){
         List<doesSetStorage> setlist = new ArrayList<doesSetStorage>();
         String query = "select * from doesset where Wname = '" + workout.name + "' and date = '" + workout.date + "'";

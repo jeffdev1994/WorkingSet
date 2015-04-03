@@ -41,6 +41,8 @@ public class StartWorkout_choose extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_workout_choose);
 
+        allSetsStorage.deleteall();
+
         ListView listView = (ListView) findViewById(R.id.workoutlist);
 
         DatabaseHandler db = new DatabaseHandler(this);

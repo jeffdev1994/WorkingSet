@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -184,6 +186,7 @@ public class StartWorkout extends ActionBarActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         int currentset = 1;
+        int deletebuttonID = 0;
         //makeupStorage makeup;
         String Ename;
         String Edescription;
@@ -223,6 +226,8 @@ public class StartWorkout extends ActionBarActivity {
 //            }
 //        }
 
+        //TODO:need to make it so that it will recalculates the set numbers properly after deleting, it works properly if you go acouple over, and have it recreate, need ot make it so it does this without causing the onResume automatically
+        //TODO: need to trim the donesets list before saving it for logs, get rid of all the empty spaces basicly should do it
         //this is used when coming back, it solves the problem of losing my sets after going to far
         @Override
         public void onResume() {
@@ -230,39 +235,65 @@ public class StartWorkout extends ActionBarActivity {
             //removes them first, since when you turn off screen, it doesnt get rid of it automatically
             LinearLayout stuff = (LinearLayout) rootView.findViewById(R.id.sets_section);
             stuff.removeAllViewsInLayout();
+            stuff.invalidate();
 
             if(currentset > 1){
             int j = 1;
+            int deletebuttonID2 = 0;
             for(int i = 0; i < donesets.size(); i+=2) {
-                LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.sets_section);
+                if(!donesets.get(i).equals("")) {
+                    LinearLayout mainlayout = (LinearLayout) rootView.findViewById(R.id.sets_section);
 
-                LinearLayout doneset = new LinearLayout(rootView.getContext());
-                doneset.setOrientation(LinearLayout.HORIZONTAL);
-                doneset.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                doneset.setPadding(0, 0, 0, 15);
+                    LinearLayout doneset = new LinearLayout(rootView.getContext());
+                    doneset.setOrientation(LinearLayout.HORIZONTAL);
+                    doneset.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    doneset.setPadding(0, 0, 0, 15);
 
-                TextView setnum = new TextView(rootView.getContext());
-                setnum.setText("\tset " + j);
-                setnum.setTextSize(25);
-                j++;
+                    TextView setnum = new TextView(rootView.getContext());
+                    setnum.setText("\tset " + j);
+                    setnum.setTextSize(25);
+                    j++;
 
-                doneset.addView(setnum);
+                    doneset.addView(setnum);
 
-                TextView setreps = new TextView(rootView.getContext());
-                setreps.setText(donesets.get(i));
-                setreps.setTextSize(25);
-                setreps.setPadding(200, 0, 0, 0);
+                    TextView setreps = new TextView(rootView.getContext());
+                    setreps.setText(donesets.get(i));
+                    setreps.setTextSize(25);
+                    setreps.setPadding(200, 0, 0, 0);
 
-                doneset.addView(setreps);
+                    doneset.addView(setreps);
 
-                TextView setweight = new TextView(rootView.getContext());
-                setweight.setText(donesets.get(i + 1));
-                setweight.setTextSize(25);
+                    TextView setweight = new TextView(rootView.getContext());
+                    setweight.setText(donesets.get(i + 1) + "\t\t\t\t\t");
+                    setweight.setTextSize(25);
 
-                doneset.addView(setweight);
+                    doneset.addView(setweight);
+
+                    ImageButton deletebutton = new ImageButton(rootView.getContext());
+                    deletebutton.setId(deletebuttonID2);
+                    //ViewGroup.LayoutParams params1 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                    deletebutton.setLayoutParams(new ViewGroup.LayoutParams(95,ViewGroup.LayoutParams.MATCH_PARENT));
+                    deletebutton.setPadding(100,20,100,0);
+                    deletebutton.setBackground(getResources().getDrawable(R.drawable.deletebutton));
+                    deletebutton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int id = v.getId();
+                            allSetsStorage.deletesingle(Ename,donesets.get((id*2)+1),donesets.get(id*2).substring(0,donesets.get(id*2).length()-3));
+                            currentset--;
+                            donesets.set((id*2) + 1, "");
+                            donesets.set(id*2, "") ;
+                            onResume();
+                            return;
+
+                        }});
+
+                    doneset.addView(deletebutton);
 
 
-                mainlayout.addView(doneset);
+                    mainlayout.addView(doneset);
+                }
+                deletebuttonID2++;
             }
 
 
@@ -469,13 +500,37 @@ public class StartWorkout extends ActionBarActivity {
                     doneset.addView(setreps);
 
                     TextView setweight = new TextView(rootView.getContext());
-                    setweight.setText(weight.getText().toString());
+                    setweight.setText(weight.getText().toString() + "\t\t\t\t\t");
                     setweight.setTextSize(25);
 
+                    doneset.addView(setweight);
+
+                    ImageButton deletebutton = new ImageButton(rootView.getContext());
+                    deletebutton.setId(deletebuttonID);
+                    deletebuttonID++;
+                    deletebutton.setLayoutParams(new ViewGroup.LayoutParams(95,ViewGroup.LayoutParams.MATCH_PARENT));
+                    deletebutton.setPadding(100,20,100,0);
+                    deletebutton.setBackground(getResources().getDrawable(R.drawable.deletebutton));
+                    deletebutton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            currentset--;
+                            int id = v.getId();
+                            allSetsStorage.deletesingle(Ename,donesets.get((id*2)+1),donesets.get(id*2).substring(0,donesets.get(id*2).length()-3));
+                            donesets.set((id*2) + 1, "");
+                            donesets.set(id*2, "") ;
+
+                            onResume();
+
+                        }});
+
+                    doneset.addView(deletebutton);
+
+                    //this is for recreating it onResume
                     donesets.add(reps.getText().toString() + " x ");
                     donesets.add(weight.getText().toString());
 
-                    doneset.addView(setweight);
+
 
 
                     mainlayout.addView(doneset);
@@ -533,7 +588,7 @@ public class StartWorkout extends ActionBarActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    //TODO: rework this so that the deleted sets dont show up in logs
                     DatabaseHandler db = new DatabaseHandler(rootView.getContext());
                     ArrayList<doesSetStorage> totalworkout = allSetsStorage.getlist();
 

@@ -20,5 +20,6 @@
     <string name="title_activity_start_workout_choose">StartWorkout_choose</string>
     <string name="title_activity_log_choose">log_choose</string>
     <string name="title_activity_logs">logs</string>
+    <string name="title_activity_home_page_settings">home_page_settings</string>
 
 </resources>
