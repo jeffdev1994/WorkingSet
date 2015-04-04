@@ -119,8 +119,10 @@
         </activity>
         <activity
             android:name=".home_page_settings"
-            android:label="@string/title_activity_home_page_settings"
-            android:parentActivityName=".HomePage" >
+            android:label="Settings"
+            android:parentActivityName=".HomePage"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />

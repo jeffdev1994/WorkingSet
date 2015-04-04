@@ -55,6 +55,11 @@ public class HomePage extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void gotostats(View view){
+        Intent intent = new Intent(this, home_page_settings.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -86,7 +91,10 @@ public class HomePage extends ActionBarActivity {
                 this.supportInvalidateOptionsMenu();
                 screentype = 1;
             }
-            return true;
+        }
+        else if(id == R.id.action_settings){
+            Intent intent = new Intent(this, home_page_settings.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
