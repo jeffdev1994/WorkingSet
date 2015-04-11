@@ -1,15 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomePage">
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="settings"
-        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_switch_screens"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="switch screen type"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Exercises help"
+        app:showAsAction="ifRoom"
+        android:tint="#ff5ea7c8"/>
+
 </menu>
+
+<!--<item-->
+<!--android:id="@+id/action_settings"-->
+<!--android:icon="@android:drawable/ic_menu_preferences"-->
+<!--android:title="settings"-->
+<!--app:showAsAction="ifRoom"/>-->

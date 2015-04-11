@@ -6,4 +6,11 @@
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="sort the logs"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Exercises help"
+        app:showAsAction="ifRoom"
+        android:tint="#ff5ea7c8"/>
+
 </menu>

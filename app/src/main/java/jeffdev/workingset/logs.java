@@ -184,8 +184,10 @@ public class logs extends ActionBarActivity {
             intent.putExtras(bundleObject);
 
             startActivity(intent);
-
-            return true;
+        }
+        else if (id == R.id.action_help) {
+            Intent intent = new Intent(this, logs_help.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

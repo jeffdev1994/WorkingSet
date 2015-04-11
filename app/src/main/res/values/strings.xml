@@ -21,5 +21,11 @@
     <string name="title_activity_log_choose">log_choose</string>
     <string name="title_activity_logs">logs</string>
     <string name="title_activity_home_page_settings">home_page_settings</string>
+    <string name="title_activity_homepage_help">homepage_help</string>
+    <string name="title_activity_edit_workout_choose_help">edit_workout_choose_help</string>
+    <string name="title_activity_log_choose_help">log_choose_help</string>
+    <string name="title_activity_logs_help">logs_help</string>
+    <string name="title_activity_startworkout_choose_help">startworkout_choose_help</string>
+    <string name="title_activity_startworkout_help">startworkout_help</string>
 
 </resources>

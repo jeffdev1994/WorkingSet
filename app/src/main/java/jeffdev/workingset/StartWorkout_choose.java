@@ -122,8 +122,9 @@ public class StartWorkout_choose extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this,startworkout_choose_help.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

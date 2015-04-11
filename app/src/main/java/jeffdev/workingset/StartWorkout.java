@@ -123,8 +123,9 @@ public class StartWorkout extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this,startworkout_help.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -225,9 +226,6 @@ public class StartWorkout extends ActionBarActivity {
 //                mainlayout.removeViewAt(10);
 //            }
 //        }
-
-        //TODO:need to make it so that it will recalculates the set numbers properly after deleting, it works properly if you go acouple over, and have it recreate, need ot make it so it does this without causing the onResume automatically
-        //TODO: need to trim the donesets list before saving it for logs, get rid of all the empty spaces basicly should do it
         //this is used when coming back, it solves the problem of losing my sets after going to far
         @Override
         public void onResume() {
@@ -577,18 +575,12 @@ public class StartWorkout extends ActionBarActivity {
         public finishFragment() {
         }
 
+        public void askuser(final View rootView){
+            AlertDialog.Builder ask = new AlertDialog.Builder(rootView.getContext());
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_finish_workout, container, false);
-
-            //start the listeners
-
-            Button submit = (Button) rootView.findViewById(R.id.submitButton);
-            submit.setOnClickListener(new View.OnClickListener() {
+            ask.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    //TODO: rework this so that the deleted sets dont show up in logs
+                public void onClick(DialogInterface dialog, int which) {
                     DatabaseHandler db = new DatabaseHandler(rootView.getContext());
                     ArrayList<doesSetStorage> totalworkout = allSetsStorage.getlist();
 
@@ -621,6 +613,34 @@ public class StartWorkout extends ActionBarActivity {
                         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 25);
                         toast.show();
                     }
+                    return;
+                }
+            });
+            ask.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+            ask.setMessage("Great work today!\nSure your done?");
+            ask.create();
+            ask.show();
+            return;
+        }
+
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_finish_workout, container, false);
+
+            //start the listeners
+
+            Button submit = (Button) rootView.findViewById(R.id.submitButton);
+            //send it to a confirmation dialog
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    askuser(rootView);
 
                 }
             });

@@ -56,8 +56,8 @@ public class HomePage extends ActionBarActivity {
     }
 
     public void gotostats(View view){
-        Intent intent = new Intent(this, home_page_settings.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, home_page_settings.class);
+//        startActivity(intent);
     }
 
     @Override
@@ -92,10 +92,16 @@ public class HomePage extends ActionBarActivity {
                 screentype = 1;
             }
         }
-        else if(id == R.id.action_settings){
-            Intent intent = new Intent(this, home_page_settings.class);
+
+        else if(id == R.id.action_help ){
+            Intent intent = new Intent(this,homepage_help.class);
             startActivity(intent);
+
         }
+//        else if(id == R.id.action_settings){
+//            Intent intent = new Intent(this, home_page_settings.class);
+//            startActivity(intent);
+//        }
 
         return super.onOptionsItemSelected(item);
     }

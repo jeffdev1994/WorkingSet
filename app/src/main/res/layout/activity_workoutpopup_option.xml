@@ -9,7 +9,7 @@
         android:background="@drawable/createworkout_addexercise_submitbutton"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:text="Quick view"
+        android:text="Quick View"
         android:id="@+id/QVbutton"
         android:layout_gravity="center_horizontal"
         android:onClick="QV"

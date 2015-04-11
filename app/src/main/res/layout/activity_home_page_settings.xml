@@ -26,9 +26,9 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switch2"
-            android:textOn="Blocks"
-            android:textOff="List"
+            android:id="@+id/home_setting"
+            android:textOn="List"
+            android:textOff="Blocks"
             android:checked="false"
             android:background="@drawable/my_toggle"
             android:showText="true"
@@ -58,16 +58,17 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:textOn="Sets"
-            android:textOff="Exercise"
+            android:id="@+id/log_setting"
+            android:textOn="Exercise"
+            android:textOff="Sets"
             android:checked="false"
             android:background="@drawable/my_toggle"
             android:showText="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:onClick="logswitch" />
     </RelativeLayout>
 
 </LinearLayout>

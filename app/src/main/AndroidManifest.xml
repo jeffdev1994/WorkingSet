@@ -86,7 +86,7 @@
         </activity>
         <activity
             android:name=".StartWorkout"
-            android:label="@string/title_activity_start_workout"
+            android:label="Workout"
             android:parentActivityName=".StartWorkout_choose"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
@@ -120,12 +120,48 @@
         <activity
             android:name=".home_page_settings"
             android:label="Settings"
-            android:parentActivityName=".HomePage"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Holo.Light.Dialog">
+            android:parentActivityName=".HomePage"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jeffdev.workingset.HomePage" />
+        </activity>
+        <activity
+            android:name=".homepage_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".edit_workout_choose_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".log_choose_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".logs_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".startworkout_choose_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".startworkout_help"
+            android:label="Help?"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
     </application>
 

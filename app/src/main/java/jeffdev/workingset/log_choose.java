@@ -111,8 +111,9 @@ public class log_choose extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this, log_choose_help.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
